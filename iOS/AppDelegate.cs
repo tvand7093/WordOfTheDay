@@ -13,9 +13,9 @@ namespace WordOfTheDay.iOS
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init ();
+			app.SetStatusBarStyle (UIStatusBarStyle.LightContent, false);
 
 			LoadApplication (new App ());
-
 			return base.FinishedLaunching (app, options);
 		}
 	}

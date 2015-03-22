@@ -7,12 +7,17 @@ namespace WordOfTheDay.ViewModels
 
 	public abstract class BaseViewModel : INotifyPropertyChanged 
 	{
+		private bool isBusy;
 		public bool IsBusy {
 			get { 
-				return Application.Current.MainPage.IsBusy;
+				return isBusy;
 			}
 			set { 
-				Application.Current.MainPage.IsBusy = value;
+				if(Application.Current.MainPage != null)
+					Application.Current.MainPage.IsBusy = value;
+				
+				isBusy = value;
+				OnPropertyChanged ("IsBusy");
 			}
 		}
 
