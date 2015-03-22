@@ -6,3 +6,5 @@
 [Pp]ackages
 *.suo
 *.vs
+.DS_Store
+*.userprefs
