@@ -21,7 +21,7 @@
 					<Label Text="{Binding DataSource.EnglishExample}" FontAttributes="Italic" TextColor="#F5CB5C" FontSize="15"/>
 				</StackLayout>
 
-				<Label Text="Data provided by: Transparent Language, Inc"
+				<Label Text="Data provided by: Transparent Language, Inc" IsVisible="{Binding ShowLabels}"
 					HorizontalOptions="CenterAndExpand" VerticalOptions="End" TextColor="White"/>
 			</StackLayout>
 		</ScrollView>
