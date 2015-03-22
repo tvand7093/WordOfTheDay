@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	BackgroundColor="#006DC6"
+	x:Class="WordOfTheDay.Pages.HomePage">
+	<ContentPage.Content>
+		<StackLayout Padding="15,50,15,0" BindingContext="{Binding DataSource}" Spacing="30">
+			<StackLayout Spacing="5">
+				<Label Text="{Binding Name}" TextColor="#F0F8EA" FontAttributes="Italic" FontSize="40"/>
+				<Label Text="{Binding PartOfSpeach}" FontAttributes="Italic" TextColor="#B2ECAA" FontSize="25" />
+			</StackLayout>
+			<StackLayout Spacing="5">
+				<Label Text="Example" FontAttributes="Bold" TextColor="#F5CB5C" />
+				<Label Text="{Binding NativeExample}" FontAttributes="Italic" TextColor="#F5CB5C" FontSize="15" />
+
+			</StackLayout>
+			<StackLayout Spacing="5">
+				<Label Text="Translation" FontAttributes="Bold" TextColor="#F5CB5C" />
+				<Label Text="{Binding EnglishExample}" FontAttributes="Italic" TextColor="#F5CB5C" FontSize="15"/>
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
