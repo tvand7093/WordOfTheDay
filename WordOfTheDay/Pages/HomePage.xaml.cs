@@ -14,10 +14,8 @@ namespace WordOfTheDay.Pages
 			ctx = new HomeViewModel ();
 			BindingContext = ctx;
 
-			this.Appearing += ctx.Loaded;
-
-			this.Disappearing += (object sender, EventArgs e) => {
-				this.Appearing -= ctx.Loaded;
+			this.Appearing += (object sender, EventArgs e) => {
+				MessagingCenter.Send<Page>(sender as Page, "Appearing");
 			};
 
 			InitializeComponent ();

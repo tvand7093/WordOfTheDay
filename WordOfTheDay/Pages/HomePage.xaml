@@ -2,27 +2,44 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	BackgroundColor="#006DC6"
+	xmlns:ctrls="clr-namespace:WordOfTheDay.Controls;assembly=WordOfTheDay"
 	x:Class="WordOfTheDay.Pages.HomePage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType="Label">
+				<Setter Property="FontFamily" Value="Marion-Regular" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
 	<ContentPage.Content>
 		<ScrollView>
 			<StackLayout Padding="{Binding Padding}" Spacing="30">
 				<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
 				 	Color="White" Scale="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
 				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}">
-					<Label Text="{Binding DataSource.Name}" TextColor="#F0F8EA" FontAttributes="Italic" FontSize="40"/>
-					<Label Text="{Binding DataSource.PartOfSpeach}" FontAttributes="Italic" TextColor="#B2E46F" FontSize="25" />
+					<Label Text="{Binding DataSource.ItalianWord}" TextColor="#F0F8EA"
+						FontSize="60" FontFamily="Marion-Italic" />
+					<Label Text="{Binding DataSource.EnglishWord}"
+						TextColor="#F5CB5C" FontSize="30" />
 				</StackLayout>
 				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}">
-					<Label Text="Usage" FontAttributes="Bold" TextColor="#F5CB5C" />
-					<Label Text="{Binding DataSource.NativeExample}" FontAttributes="Italic" TextColor="#F5CB5C" FontSize="15" />
+					<ctrls:HeaderLabel Text="Part of Speach" TextColor="#F5CB5C" />
+					<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F5CB5C"  />
+				</StackLayout>
+				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}">
+					<ctrls:HeaderLabel Text="Usage" TextColor="#F5CB5C" />
+					<ctrls:ExampleLabel Text="{Binding DataSource.NativeExample}" TextColor="#F5CB5C"/>
 				</StackLayout>
 				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}" VerticalOptions="FillAndExpand">
-					<Label Text="Translation" FontAttributes="Bold" TextColor="#F5CB5C" />
-					<Label Text="{Binding DataSource.EnglishExample}" FontAttributes="Italic" TextColor="#F5CB5C" FontSize="15"/>
+					<ctrls:HeaderLabel Text="Translation" TextColor="#F5CB5C" />
+					<ctrls:ExampleLabel Text="{Binding DataSource.EnglishExample}" TextColor="#F5CB5C"/>
 				</StackLayout>
 
+				<!---<ctrls:TapImage Source="Refresh.png" Command="{Binding RefreshCommand}"
+					HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>-->
+
 				<Label Text="Data provided by: Transparent Language, Inc" IsVisible="{Binding ShowLabels}"
-					HorizontalOptions="CenterAndExpand" VerticalOptions="End" TextColor="White"/>
+					HorizontalOptions="CenterAndExpand" VerticalOptions="End" FontSize="15" TextColor="White"/>
 			</StackLayout>
 		</ScrollView>
 	</ContentPage.Content>

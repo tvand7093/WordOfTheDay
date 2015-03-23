@@ -13,10 +13,18 @@ namespace WordOfTheDay.Structures
 {
 	public class Word 
 	{
-		public string Name {get;set;}
+		public string EnglishWord {get;set;}
+		public string ItalianWord {get;set;}
 		public string PartOfSpeach {get;set;}
 		public string EnglishExample {get;set;}
 		public string NativeExample {get;set;}
+		public void Copy(Word toCopy){
+			EnglishWord = toCopy.EnglishWord;
+			ItalianWord = toCopy.ItalianWord;
+			PartOfSpeach = toCopy.PartOfSpeach;
+			EnglishExample = toCopy.EnglishExample;
+			NativeExample = toCopy.NativeExample;
+		}
 	}
 
 	public static class FeedService
@@ -30,11 +38,12 @@ namespace WordOfTheDay.Structures
 				var feed = "http://feeds.feedblitz.com/italian-word-of-the-day&x=1";
 				responseString = await httpClient.GetStringAsync(feed);
 			}
+				
 
 			var xdoc = XDocument.Parse (responseString);
 
 			var item = xdoc.Descendants ("item").First ();
-			var title = item.Element ("title").Value;
+			var titleParts = item.Element ("title").Value.Split (':');
 			var desc = item.Element("description").Value;
 
 			//get rid of HTML tags
@@ -63,7 +72,8 @@ namespace WordOfTheDay.Structures
 			var split = sb.ToString ().Split('\n');
 
 			return new Word {
-				Name = title,
+				ItalianWord = titleParts[0].Trim() ?? string.Empty,
+				EnglishWord = titleParts[1].Trim() ?? string.Empty,
 				PartOfSpeach = split[0] ?? string.Empty,
 				NativeExample = split[1] ?? string.Empty,
 				EnglishExample = split[2] ?? string.Empty,

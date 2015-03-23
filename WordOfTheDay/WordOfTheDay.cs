@@ -3,6 +3,7 @@
 using Xamarin.Forms;
 using System.Diagnostics;
 using WordOfTheDay.Pages;
+using WordOfTheDay.ViewModels;
 
 namespace WordOfTheDay
 {
@@ -22,6 +23,8 @@ namespace WordOfTheDay
 		protected override void OnSleep ()
 		{
 			// Handle when your app sleeps
+			var ctx = MainPage.BindingContext as HomeViewModel;
+			ctx.Unsubscribe ();
 		}
 
 		protected override void OnResume ()
