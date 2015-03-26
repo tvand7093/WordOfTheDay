@@ -25,11 +25,13 @@ namespace WordOfTheDay
 			// Handle when your app sleeps
 			var ctx = MainPage.BindingContext as HomeViewModel;
 			ctx.Unsubscribe ();
+			MainPage.IsBusy = false;
 		}
 
 		protected override void OnResume ()
 		{
 			// Handle when your app resumes
+			MainPage = new HomePage ();
 		}
 	}
 }

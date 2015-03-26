@@ -8,11 +8,9 @@ namespace WordOfTheDay.Pages
 {
 	public partial class HomePage : ContentPage
 	{
-		private HomeViewModel ctx;
 		public HomePage ()
 		{
-			ctx = new HomeViewModel ();
-			BindingContext = ctx;
+			BindingContext = new HomeViewModel ();;
 
 			this.Appearing += (object sender, EventArgs e) => {
 				MessagingCenter.Send<Page>(sender as Page, "Appearing");

@@ -6,7 +6,6 @@ using UIKit;
 using WordOfTheDay.iOS.Interop;
 using Foundation;
 
-
 [assembly: ExportRenderer(typeof(HeaderLabel), typeof(HeaderLabelRenderer))]
 namespace WordOfTheDay.iOS.Interop
 {

@@ -5,10 +5,10 @@ using System.Windows.Input;
 
 namespace WordOfTheDay.Controls
 {
-	public partial class TapImage : Image
+	public partial class HyperlinkLabel : Label
 	{
 		public static readonly BindableProperty CommandProperty =
-			BindableProperty.Create<TapImage, ICommand>(
+			BindableProperty.Create<HyperlinkLabel, ICommand>(
 				(l) => l.Command,
 				null,
 				propertyChanged: (img, oldVal, newVal) => {
@@ -16,7 +16,7 @@ namespace WordOfTheDay.Controls
 				});
 
 		public static readonly BindableProperty CommandParameterProperty =
-			BindableProperty.Create<TapImage, object>(
+			BindableProperty.Create<HyperlinkLabel, object>(
 				(l) => l.CommandParameter,
 				null,
 				propertyChanged: (img, oldVal, newVal) => {
@@ -42,8 +42,8 @@ namespace WordOfTheDay.Controls
 				OnPropertyChanged ("Command");
 			}
 		}
-	
-		public TapImage ()
+
+		public HyperlinkLabel ()
 		{
 			tappedRecognizer = new TapGestureRecognizer ();
 			GestureRecognizers.Add (tappedRecognizer);

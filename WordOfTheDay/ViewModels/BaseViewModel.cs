@@ -34,6 +34,8 @@ namespace WordOfTheDay.ViewModels
 			}
 		}
 
+
+
 		#region Property Changed Implementation
 
 		public event PropertyChangedEventHandler PropertyChanged;

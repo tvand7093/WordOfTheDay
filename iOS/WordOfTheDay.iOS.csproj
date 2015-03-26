@@ -131,6 +131,8 @@
     <BundleResource Include="Resources\Icon-Small-40%403x.png" />
     <BundleResource Include="Resources\Refresh.png" />
     <BundleResource Include="Resources\Refresh%402x.png" />
+    <BundleResource Include="Resources\RightArrow.png" />
+    <BundleResource Include="Resources\RightArrow%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

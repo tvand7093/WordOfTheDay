@@ -5,35 +5,38 @@ using System.Linq;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WordOfTheDay.Models;
+using WordOfTheDay.Pages;
 
 namespace WordOfTheDay.ViewModels
 {
 	public class HomeViewModel : BaseViewModel<Word>, ISubscriber
 	{
-		private const int Gutter = 15;
+		const int Gutter = 15;
+		const string WebPageURL = "http://www.transparent.com/word-of-the-day/today/italian.html?date={0}-{1}-{2}";
+		readonly Thickness defaultThickness = new Thickness (0, 0, 0, 0);
 
 		public async void Loading(Page sender) 
 		{
-			var page = sender as Page;
+			Padding = defaultThickness;
 
 			//hide all labels and show loading
-			Padding = new Thickness(0,0,0,0);
-			page.IsBusy = IsBusy = true;
+			sender.IsBusy = IsBusy = true;
 			ShowLabels = false;
 
-			DataSource = await FeedService.WOTD ();
+			DataSource = await FeedService.GetWordAsync ().ConfigureAwait(true);
 			OnPropertyChanged ("DataSource");
-			//set padding 
-			Padding = CalculatePadding (page);
+
+			Padding = CalculatePadding (sender);
 
 			//disable loading stuff.
-			page.IsBusy = IsBusy = false;
+			sender.IsBusy = IsBusy = false;
 
 			//show resulting labels
 			ShowLabels = true;
 		}
 
-		public ICommand RefreshCommand {get; private set;}
+		public ICommand OpenCommand { get; private set; }
 
 		private bool showLabels;
 		public bool ShowLabels {
@@ -54,7 +57,13 @@ namespace WordOfTheDay.ViewModels
 		}
 
 		private Thickness CalculatePadding(Page view){
-			return new Thickness (Gutter, view.Height / 6, Gutter, Gutter);
+			Thickness thickness = defaultThickness;
+
+			Device.OnPlatform (
+				iOS: () => thickness = new Thickness (Gutter, view.Height / 6, Gutter, Gutter),
+				Android: () => thickness = new Thickness (Gutter, view.Height / 10, Gutter, Gutter)
+			);
+			return thickness;
 		}
 
 		public void Subscribe() {
@@ -64,12 +73,20 @@ namespace WordOfTheDay.ViewModels
 
 		public void Unsubscribe() {
 			MessagingCenter.Unsubscribe<Page> (this, "Appearing");
+			IsBusy = false;
+			ShowLabels = false;
 		}
-
+			
 		public HomeViewModel ()
 		{
 			Subscribe ();
-			RefreshCommand = new Command (() => Loading (App.Current.MainPage));
+
+			OpenCommand = new Command(() => {
+				var url = string.Format(WebPageURL, DataSource.Date.Month, 
+					DataSource.Date.Day, DataSource.Date.Year);
+				Device.OpenUri(new Uri(url)); 
+			});
+			DataSource = new Word ();
 		}
 	}
 }

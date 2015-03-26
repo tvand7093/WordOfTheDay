@@ -13,33 +13,36 @@
 	</ContentPage.Resources>
 	<ContentPage.Content>
 		<ScrollView>
-			<StackLayout Padding="{Binding Padding}" Spacing="30">
+			<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand">
 				<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
 				 	Color="White" Scale="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}">
-					<Label Text="{Binding DataSource.ItalianWord}" TextColor="#F0F8EA"
-						FontSize="60" FontFamily="Marion-Italic" />
-					<Label Text="{Binding DataSource.EnglishWord}"
-						TextColor="#F5CB5C" FontSize="30" />
-				</StackLayout>
-				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}">
-					<ctrls:HeaderLabel Text="Part of Speach" TextColor="#F5CB5C" />
-					<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F5CB5C"  />
-				</StackLayout>
-				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}">
-					<ctrls:HeaderLabel Text="Usage" TextColor="#F5CB5C" />
-					<ctrls:ExampleLabel Text="{Binding DataSource.NativeExample}" TextColor="#F5CB5C"/>
-				</StackLayout>
-				<StackLayout Spacing="5" IsVisible="{Binding ShowLabels}" VerticalOptions="FillAndExpand">
-					<ctrls:HeaderLabel Text="Translation" TextColor="#F5CB5C" />
-					<ctrls:ExampleLabel Text="{Binding DataSource.EnglishExample}" TextColor="#F5CB5C"/>
-				</StackLayout>
+			 	<StackLayout Padding="{Binding Padding}" VerticalOptions="FillAndExpand" Spacing="30" IsVisible="{Binding ShowLabels}">
 
-				<!---<ctrls:TapImage Source="Refresh.png" Command="{Binding RefreshCommand}"
-					HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>-->
+			 		<StackLayout Spacing="0">
+				 		<StackLayout Orientation="Horizontal">
+							<ctrls:HyperlinkLabel Text="{Binding DataSource.ItalianWord}"/>
+							<ctrls:TapImage Command="{Binding OpenCommand}" Source="RightArrow.png" />
+						</StackLayout>
+						<Label Text="{Binding DataSource.EnglishWord}"
+							TextColor="#F5CB5C" FontSize="30" />
+			 		</StackLayout>
 
-				<Label Text="Data provided by: Transparent Language, Inc" IsVisible="{Binding ShowLabels}"
-					HorizontalOptions="CenterAndExpand" VerticalOptions="End" FontSize="15" TextColor="White"/>
+			 		<StackLayout Spacing="5">
+			 			<ctrls:HeaderLabel Text="Part of Speach" TextColor="#F5CB5C" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F5CB5C"  />	
+			 		</StackLayout>
+			 		<StackLayout Spacing="5">
+			 			<ctrls:HeaderLabel Text="Usage" TextColor="#F5CB5C" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.NativeExample}" TextColor="#F5CB5C"/>
+			 		</StackLayout>
+			 		<StackLayout Spacing="5" VerticalOptions="FillAndExpand">
+			 			<ctrls:HeaderLabel Text="Translation" TextColor="#F5CB5C" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.EnglishExample}" TextColor="#F5CB5C"/>
+			 		</StackLayout>
+
+					<Label Text="Data provided by: Transparent Language, Inc"
+						HorizontalOptions="CenterAndExpand" VerticalOptions="End" FontSize="15" TextColor="White"/>
+			 	</StackLayout>
 			</StackLayout>
 		</ScrollView>
 	</ContentPage.Content>
