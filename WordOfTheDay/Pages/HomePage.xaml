@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	BackgroundColor="#006DC6"
+	xmlns:ctrls="clr-namespace:WordOfTheDay.Controls;assembly=WordOfTheDay"
+	x:Class="WordOfTheDay.Pages.HomePage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType="Label">
+				<Setter Property="FontFamily" Value="Marion-Regular" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand">
+				<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+				 	Color="White" Scale="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+			 	<StackLayout Padding="{Binding Padding}" VerticalOptions="FillAndExpand" Spacing="30" IsVisible="{Binding ShowLabels}">
+
+			 		<StackLayout Spacing="0">
+				 		<StackLayout Orientation="Horizontal">
+							<ctrls:HyperlinkLabel Text="{Binding DataSource.ItalianWord}"/>
+							<ctrls:TapImage Command="{Binding OpenCommand}" Source="RightArrow.png" />
+						</StackLayout>
+						<Label Text="{Binding DataSource.EnglishWord}"
+							TextColor="#F5CB5C" FontSize="30" />
+			 		</StackLayout>
+
+			 		<StackLayout Spacing="5">
+			 			<ctrls:HeaderLabel Text="Part of Speach" TextColor="#F5CB5C" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F5CB5C"  />	
+			 		</StackLayout>
+			 		<StackLayout Spacing="5">
+			 			<ctrls:HeaderLabel Text="Usage" TextColor="#F5CB5C" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.NativeExample}" TextColor="#F5CB5C"/>
+			 		</StackLayout>
+			 		<StackLayout Spacing="5" VerticalOptions="FillAndExpand">
+			 			<ctrls:HeaderLabel Text="Translation" TextColor="#F5CB5C" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.EnglishExample}" TextColor="#F5CB5C"/>
+			 		</StackLayout>
+
+					<Label Text="Data provided by: Transparent Language, Inc"
+						HorizontalOptions="CenterAndExpand" VerticalOptions="End" FontSize="15" TextColor="White"/>
+			 	</StackLayout>
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>
