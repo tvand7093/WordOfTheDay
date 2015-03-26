@@ -22,13 +22,9 @@ namespace WordOfTheDay.iOS
 
 		void ConfigureInsights(){
 			#if DEBUG
-
 			Insights.Initialize(Insights.DebugModeKey);
-
 			#else
-
 			Insights.Initialize("2c20bceca57690c4e1696a98faa68cef19795dc7");
-
 			#endif
 
 			Insights.HasPendingCrashReport += (sender, isStartupCrash) =>
