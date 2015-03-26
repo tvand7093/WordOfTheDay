@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using WordOfTheDay.Models;
 using Xamarin.Forms;
+using Xamarin;
 
 namespace WordOfTheDay.Structures
 {
@@ -19,6 +20,12 @@ namespace WordOfTheDay.Structures
 		const string CacheKey = "CachedWord";
 
 		static Word ParseHtml(string html){
+			if (String.IsNullOrEmpty (html)) {
+				Insights.Report (new Exception ("Html from fetchingn new word was null or empty"),
+					ReportSeverity.Error);
+				return null;
+			}
+
 			var xdoc = XDocument.Parse (html);
 
 			var pubDate = xdoc.Root.Element ("channel").Element ("pubDate").Value;
@@ -85,17 +92,29 @@ namespace WordOfTheDay.Structures
 
 			//no cached word, or we need to fetch the next day's word.
 			string html = string.Empty;
+
+			var handle = Insights.TrackTime("TimeToFetchWord");
+			handle.Start();
+
 			using(var httpClient = new HttpClient())
 			{
 				html = await httpClient.GetStringAsync(RSSUrl);
 			}
+
+			handle.Stop ();
+
+			handle = Insights.TrackTime ("TimeToParseHTMLAndSave");
+
+			handle.Start ();
 			//parse out the word info
 			var word = await Task.Run(() => ParseHtml(html));
 
-			//save new word into cache
-			Application.Current.Properties.Add (CacheKey, word);
-			await Application.Current.SavePropertiesAsync ();
-
+			if (word != null) {
+				//save new word into cache
+				Application.Current.Properties.Add (CacheKey, word);
+				await Application.Current.SavePropertiesAsync ();
+			}
+			handle.Stop ();
 			return word;
 		}
 	}

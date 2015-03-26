@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WordOfTheDay.Models;
 using WordOfTheDay.Pages;
+using Xamarin;
 
 namespace WordOfTheDay.ViewModels
 {
@@ -24,16 +25,23 @@ namespace WordOfTheDay.ViewModels
 			sender.IsBusy = IsBusy = true;
 			ShowLabels = false;
 
-			DataSource = await FeedService.GetWordAsync ().ConfigureAwait(true);
-			OnPropertyChanged ("DataSource");
+			try{
+				DataSource = await FeedService.GetWordAsync ().ConfigureAwait(true);
+				OnPropertyChanged ("DataSource");
+			}
+			catch(Exception e){
+				Insights.Report (e);
+			}
+			finally {
+				Padding = CalculatePadding (sender);
 
-			Padding = CalculatePadding (sender);
+				//disable loading stuff.
+				sender.IsBusy = IsBusy = false;
 
-			//disable loading stuff.
-			sender.IsBusy = IsBusy = false;
+				//show resulting labels
+				ShowLabels = true;
+			}
 
-			//show resulting labels
-			ShowLabels = true;
 		}
 
 		public ICommand OpenCommand { get; private set; }
