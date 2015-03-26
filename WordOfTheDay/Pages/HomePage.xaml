@@ -19,8 +19,8 @@
 			 	<StackLayout Padding="{Binding Padding}" VerticalOptions="FillAndExpand" Spacing="30" IsVisible="{Binding ShowLabels}">
 
 			 		<StackLayout Spacing="0">
-				 		<StackLayout Orientation="Horizontal">
-							<ctrls:HyperlinkLabel Text="{Binding DataSource.ItalianWord}"/>
+				 		<StackLayout Orientation="Horizontal" Spacing="10">
+							<ctrls:HyperlinkLabel Text="{Binding DataSource.ItalianWord}" Command="{Binding OpenCommand}"/>
 							<ctrls:TapImage Command="{Binding OpenCommand}" Source="RightArrow.png" />
 						</StackLayout>
 						<Label Text="{Binding DataSource.EnglishWord}"
