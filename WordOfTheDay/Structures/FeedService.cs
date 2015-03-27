@@ -110,6 +110,8 @@ namespace WordOfTheDay.Structures
 			var word = await Task.Run(() => ParseHtml(html));
 
 			if (word != null) {
+				//remove old word from cache
+				Application.Current.Properties.Remove(CacheKey);
 				//save new word into cache
 				Application.Current.Properties.Add (CacheKey, word);
 				await Application.Current.SavePropertiesAsync ();
