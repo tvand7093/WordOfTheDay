@@ -21,11 +21,11 @@ namespace WordOfTheDay.Structures
 
 		static Word ParseHtml(string html){
 			if (String.IsNullOrEmpty (html)) {
-				Insights.Report (new Exception ("Html from fetchingn new word was null or empty"),
+				Insights.Report (new Exception ("Html from fetching new word was null or empty"),
 					ReportSeverity.Error);
 				return null;
 			}
-
+				
 			var xdoc = XDocument.Parse (html);
 
 			var pubDate = xdoc.Root.Element ("channel").Element ("pubDate").Value;
