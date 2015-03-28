@@ -55,7 +55,6 @@ namespace WordOfTheDay.Structures
 					sb.AppendLine (trimmed);
 				}
 			}
-
 			var split = sb.ToString ().Split ('\n');
 			var word = new Word {
 				TodaysWord = titleParts [0].Trim () ?? string.Empty,

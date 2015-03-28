@@ -5,6 +5,8 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using Xamarin;
+using WordOfTheDay.Structures;
+using System.Diagnostics;
 
 namespace WordOfTheDay.iOS
 {
@@ -25,7 +27,7 @@ namespace WordOfTheDay.iOS
 			#if DEBUG
 			Insights.Initialize(Insights.DebugModeKey);
 			#else
-			Insights.Initialize("2c20bceca57690c4e1696a98faa68cef19795dc7");
+			Insights.Initialize(Configuration.InsightsApiKey);
 			#endif
 
 			Insights.HasPendingCrashReport += (sender, isStartupCrash) =>

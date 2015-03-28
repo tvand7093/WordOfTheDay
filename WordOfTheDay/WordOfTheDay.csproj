@@ -103,6 +103,6 @@
     <EmbeddedResource Include="Controls\HyperlinkLabel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="settings.config" />
+    <EmbeddedResource Include="settings.sample.config" />
   </ItemGroup>
 </Project>

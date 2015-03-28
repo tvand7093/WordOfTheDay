@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Xamarin;
+using WordOfTheDay.Structures;
 
 namespace WordOfTheDay.Droid
 {
@@ -20,7 +21,7 @@ namespace WordOfTheDay.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
-			Insights.Initialize("2c20bceca57690c4e1696a98faa68cef19795dc7", this);
+			Insights.Initialize(Configuration.InsightsApiKey, this);
 			LoadApplication (new App ());
 		}
 	}
