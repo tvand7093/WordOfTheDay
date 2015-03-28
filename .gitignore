@@ -8,3 +8,4 @@
 *.vs
 .DS_Store
 *.userprefs
+settings.config
