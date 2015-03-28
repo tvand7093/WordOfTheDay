@@ -20,7 +20,7 @@
 
 			 		<StackLayout Spacing="0">
 				 		<StackLayout Orientation="Horizontal" Spacing="10">
-							<ctrls:HyperlinkLabel Text="{Binding DataSource.ItalianWord}" Command="{Binding OpenCommand}"/>
+							<ctrls:HyperlinkLabel Text="{Binding DataSource.TodaysWord}" Command="{Binding OpenCommand}"/>
 							<ctrls:TapImage Command="{Binding OpenCommand}" Source="RightArrow.png" />
 						</StackLayout>
 						<Label Text="{Binding DataSource.EnglishWord}"
@@ -33,7 +33,7 @@
 			 		</StackLayout>
 			 		<StackLayout Spacing="5">
 			 			<ctrls:HeaderLabel Text="Usage" TextColor="#F5CB5C" />
-						<ctrls:ExampleLabel Text="{Binding DataSource.NativeExample}" TextColor="#F5CB5C"/>
+						<ctrls:ExampleLabel Text="{Binding DataSource.TodaysExample}" TextColor="#F5CB5C"/>
 			 		</StackLayout>
 			 		<StackLayout Spacing="5" VerticalOptions="FillAndExpand">
 			 			<ctrls:HeaderLabel Text="Translation" TextColor="#F5CB5C" />

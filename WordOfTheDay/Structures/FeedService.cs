@@ -58,10 +58,10 @@ namespace WordOfTheDay.Structures
 
 			var split = sb.ToString ().Split ('\n');
 			var word = new Word {
-				ItalianWord = titleParts [0].Trim () ?? string.Empty,
+				TodaysWord = titleParts [0].Trim () ?? string.Empty,
 				EnglishWord = titleParts [1].Trim () ?? string.Empty,
 				PartOfSpeach = split [0] ?? string.Empty,
-				NativeExample = split [1] ?? string.Empty,
+				TodaysExample = split [1] ?? string.Empty,
 				EnglishExample = split [2] ?? string.Empty,
 				Date = DateTime.Parse(pubDate)
 			};
