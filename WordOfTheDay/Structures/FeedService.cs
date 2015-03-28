@@ -63,7 +63,7 @@ namespace WordOfTheDay.Structures
 				PartOfSpeach = split [0] ?? string.Empty,
 				NativeExample = split [1] ?? string.Empty,
 				EnglishExample = split [2] ?? string.Empty,
-				Date = DateTime.Parse(pubDate).ToUniversalTime()
+				Date = DateTime.Parse(pubDate)
 			};
 			return word;
 		}
@@ -73,7 +73,7 @@ namespace WordOfTheDay.Structures
 				if (Application.Current.Properties.ContainsKey (CacheKey)) {
 					var cachedWord = Application.Current.Properties [CacheKey] as Word;
 					var cachedDate = cachedWord.Date.Date;
-					var currentDate = DateTime.Now.ToUniversalTime ().Date;
+					var currentDate = DateTime.Now.Date;
 					if (cachedDate == currentDate) {
 						//date same, so just return cached word.
 						return cachedWord;
