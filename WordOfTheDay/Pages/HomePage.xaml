@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	BackgroundColor="#006DC6"
+	BackgroundColor="#344D9F"
 	xmlns:ctrls="clr-namespace:WordOfTheDay.Controls;assembly=WordOfTheDay"
 	x:Class="WordOfTheDay.Pages.HomePage">
 	<ContentPage.Resources>
@@ -20,28 +20,28 @@
 
 			 		<StackLayout Spacing="0">
 				 		<StackLayout Orientation="Horizontal" Spacing="10">
-							<ctrls:HyperlinkLabel Text="{Binding DataSource.TodaysWord}" Command="{Binding OpenCommand}"/>
+							<ctrls:HyperlinkLabel Text="{Binding DataSource.TodaysWord}" TextColor="#F1F2F1" Command="{Binding OpenCommand}"/>
 							<ctrls:TapImage Command="{Binding OpenCommand}" Source="RightArrow.png" />
 						</StackLayout>
 						<Label Text="{Binding DataSource.EnglishWord}"
-							TextColor="#F5CB5C" FontSize="30" />
+							TextColor="#F1F2F1" FontSize="30" />
 			 		</StackLayout>
 
 			 		<StackLayout Spacing="5">
-			 			<ctrls:HeaderLabel Text="Part of Speach" TextColor="#F5CB5C" />
-						<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F5CB5C"  />	
+			 			<ctrls:HeaderLabel Text="Part of Speach" TextColor="#F1F2F1" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F1F2F1" />	
 			 		</StackLayout>
 			 		<StackLayout Spacing="5">
-			 			<ctrls:HeaderLabel Text="Usage" TextColor="#F5CB5C" />
-						<ctrls:ExampleLabel Text="{Binding DataSource.TodaysExample}" TextColor="#F5CB5C"/>
+			 			<ctrls:HeaderLabel Text="Usage" TextColor="#F1F2F1" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.TodaysExample}" TextColor="#F1F2F1"/>
 			 		</StackLayout>
 			 		<StackLayout Spacing="5" VerticalOptions="FillAndExpand">
-			 			<ctrls:HeaderLabel Text="Translation" TextColor="#F5CB5C" />
-						<ctrls:ExampleLabel Text="{Binding DataSource.EnglishExample}" TextColor="#F5CB5C"/>
+			 			<ctrls:HeaderLabel Text="Translation" TextColor="#F1F2F1" />
+						<ctrls:ExampleLabel Text="{Binding DataSource.EnglishExample}" TextColor="#F1F2F1"/>
 			 		</StackLayout>
 
 					<Label Text="Data provided by: Transparent Language, Inc"
-						HorizontalOptions="CenterAndExpand" VerticalOptions="End" FontSize="15" TextColor="White"/>
+						HorizontalOptions="CenterAndExpand" VerticalOptions="End" FontSize="15" TextColor="#F1F2F1"/>
 			 	</StackLayout>
 			</StackLayout>
 		</ScrollView>

@@ -11,13 +11,14 @@ using System.Text.RegularExpressions;
 using WordOfTheDay.Models;
 using Xamarin.Forms;
 using Xamarin;
+using PCLStorage;
+using Newtonsoft.Json;
 
 namespace WordOfTheDay.Structures
 {
 	public static class FeedService
 	{
 		const string RSSUrl = "http://feeds.feedblitz.com/italian-word-of-the-day&x=1";
-		const string CacheKey = "CachedWord";
 
 		static Word ParseHtml(string html){
 			if (String.IsNullOrEmpty (html)) {
@@ -67,24 +68,11 @@ namespace WordOfTheDay.Structures
 			return word;
 		}
 
-		static Task<Word> GetCachedWordAsync(){
-			return Task.Run<Word> (() => {
-				if (Application.Current.Properties.ContainsKey (CacheKey)) {
-					var cachedWord = Application.Current.Properties [CacheKey] as Word;
-					var cachedDate = cachedWord.Date.Date;
-					var currentDate = DateTime.Now.Date;
-					if (cachedDate == currentDate) {
-						//date same, so just return cached word.
-						return cachedWord;
-					}
-				}
-				return null;
-			});
-		}
+
 
 		public static async Task<Word> GetWordAsync(){
 			//see if we already have today's word.
-			var cached = await GetCachedWordAsync ();
+			var cached = await FileService.LoadWordAsync ();
 
 			if (cached != null)
 				return cached;
@@ -109,11 +97,8 @@ namespace WordOfTheDay.Structures
 			var word = await Task.Run(() => ParseHtml(html));
 
 			if (word != null) {
-				//remove old word from cache
-				Application.Current.Properties.Remove(CacheKey);
-				//save new word into cache
-				Application.Current.Properties.Add (CacheKey, word);
-				await Application.Current.SavePropertiesAsync ();
+				//save new word to cache
+				FileService.SaveWordAsync(word);
 			}
 			handle.Stop ();
 			return word;
