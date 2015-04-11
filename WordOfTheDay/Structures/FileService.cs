@@ -34,6 +34,8 @@ namespace WordOfTheDay.Structures
 		internal static async void SaveWordAsync(Word toCache){
 			IFolder rootFolder = FileSystem.Current.LocalStorage;
 			var file = await rootFolder.CreateFileAsync (CacheFile, CreationCollisionOption.ReplaceExisting);
+			//set date to simple date, not including UTC
+			toCache.Date = toCache.Date.Date;
 			await file.WriteAllTextAsync (JsonConvert.SerializeObject (toCache));
 		}
 	}
