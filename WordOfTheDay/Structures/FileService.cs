@@ -3,6 +3,7 @@ using WordOfTheDay.Models;
 using PCLStorage;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace WordOfTheDay.Structures
 {
@@ -18,9 +19,9 @@ namespace WordOfTheDay.Structures
 				var file = await rootFolder.GetFileAsync (CacheFile);
 				var json = await file.ReadAllTextAsync ();
 				var cachedWord = JsonConvert.DeserializeObject<Word> (json);
-
 				var cachedDate = cachedWord.Date.Date;
 				var currentDate = DateTime.Now.Date;
+
 				if (cachedDate == currentDate) {
 					//date same, so just return cached word.
 					return cachedWord;

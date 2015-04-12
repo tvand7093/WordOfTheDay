@@ -13,6 +13,7 @@ using Xamarin.Forms;
 using Xamarin;
 using PCLStorage;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace WordOfTheDay.Structures
 {
@@ -57,12 +58,20 @@ namespace WordOfTheDay.Structures
 				}
 			}
 			var split = sb.ToString ().Split ('\n');
+
+			var todaysWord = titleParts [0].Trim () ?? string.Empty;
+			var englishWord = titleParts [0].Trim () ?? string.Empty;
+
+			var partOfSpeach = split [0].Trim () ?? string.Empty;
+			var example = split [1].Trim () ?? string.Empty;
+			var englishExample = split [2].Trim () ?? string.Empty;
+
 			var word = new Word {
-				TodaysWord = titleParts [0].Trim () ?? string.Empty,
-				EnglishWord = titleParts [1].Trim () ?? string.Empty,
-				PartOfSpeach = split [0] ?? string.Empty,
-				TodaysExample = split [1] ?? string.Empty,
-				EnglishExample = split [2] ?? string.Empty,
+				TodaysWord = WebUtility.HtmlDecode (todaysWord),
+				EnglishWord = WebUtility.HtmlDecode (englishWord),
+				PartOfSpeach = WebUtility.HtmlDecode (partOfSpeach),
+				TodaysExample = WebUtility.HtmlDecode (example),
+				EnglishExample = WebUtility.HtmlDecode (englishExample),
 				Date = DateTime.Parse(pubDate)
 			};
 			return word;
