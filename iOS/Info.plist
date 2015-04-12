@@ -25,6 +25,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -33,42 +35,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleDisplayName</key>
 	<string>La parola</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>Images.xcassets/AppIcons.appiconset/Icon</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon@2x</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-60@2x</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-72</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-72@2x</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-76</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-76@2x</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-Small</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-Small@2x</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-Small-50</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-Small-50@2x</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-Small-40</string>
-		<string>Images.xcassets/AppIcons.appiconset/Icon-Small-40@2x</string>
-		<string>Icon</string>
-		<string>Icon@2x</string>
-		<string>Icon-60@2x</string>
-		<string>Icon-72</string>
-		<string>Icon-72@2x</string>
-		<string>Icon-76</string>
-		<string>Icon-Small</string>
-		<string>Icon-Small@2x</string>
-		<string>Icon-Small-50</string>
-		<string>Icon-Small-50@2x</string>
-		<string>Icon-Small-40</string>
-		<string>Icon-Small-40@2x</string>
-		<string>Icon-76@2x</string>
-	</array>
+	<key>XSAppIconAssets</key>
+	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Resources/Images.xcassets/LaunchImage.launchimage</string>
 </dict>
 </plist>

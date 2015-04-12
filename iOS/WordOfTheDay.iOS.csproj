@@ -137,13 +137,6 @@
   <ItemGroup>
     <BundleResource Include="Resources\RightArrow.png" />
     <BundleResource Include="Resources\RightArrow%402x.png" />
-    <BundleResource Include="Resources\Default.png" />
-    <BundleResource Include="Resources\Default%402x.png" />
-    <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\Default-Portrait.png" />
-    <BundleResource Include="Resources\Default-Portrait%402x.png" />
-    <BundleResource Include="Resources\Default-Landscape%402x.png" />
-    <BundleResource Include="Resources\Default-Landscape.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -166,21 +159,43 @@
     <Folder Include="Interop\" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Resources\Icon.png" />
-    <ImageAsset Include="Resources\Icon%402x.png" />
-    <ImageAsset Include="Resources\Icon-60%402x.png" />
     <ImageAsset Include="Resources\Icon-60%403x.png" />
-    <ImageAsset Include="Resources\Icon-72.png" />
-    <ImageAsset Include="Resources\Icon-72%402x.png" />
-    <ImageAsset Include="Resources\Icon-76.png" />
-    <ImageAsset Include="Resources\Icon-76%402x.png" />
-    <ImageAsset Include="Resources\Icon-Small.png" />
-    <ImageAsset Include="Resources\Icon-Small%402x.png" />
     <ImageAsset Include="Resources\Icon-Small%403x.png" />
-    <ImageAsset Include="Resources\Icon-Small-40.png" />
-    <ImageAsset Include="Resources\Icon-Small-40%402x.png" />
     <ImageAsset Include="Resources\Icon-Small-40%403x.png" />
-    <ImageAsset Include="Resources\Icon-Small-50.png" />
-    <ImageAsset Include="Resources\Icon-Small-50%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-60%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-72.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-72%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-76.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-76%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-50.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-50%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-40.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-40%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-568h%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPadPortrait.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPadPortrait%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPadLandscape.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPadLandscape%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPhoneLaunch%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPhoneLandscape1%403x Copy.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPhonePortrait%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iPhoneLaunch%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\iphone6_8_p.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\ipad_defualt_l.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\iPhone-40%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\iPhone87%403x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\iPhone180%402x.png" />
   </ItemGroup>
 </Project>
