@@ -5,7 +5,7 @@ mono:
 install:
   - nuget restore WordOfTheDay.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
-	- sudo apt-get install nunit-console
+  - sudo apt-get install nunit-console
   - sudo apt-get install gtk-sharp2
   - curl -sS https://api.nuget.org/packages/mono.cecil.0.9.5.4.nupkg > /tmp/mono.cecil.0.9.5.4.nupkg.zip
   - unzip /tmp/mono.cecil.0.9.5.4.nupkg.zip -d /tmp/cecil
@@ -20,7 +20,7 @@ install:
   - cd ../../tvand7093/WordOfTheDay
 script:
   - xbuild /p:Configuration=Test WordOfTheDay.sln
-	- export LD_LIBRARY_PATH=/usr/local/lib
+  - export LD_LIBRARY_PATH=/usr/local/lib
   - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe "./WordOfTheDayTests/bin/Test/WordOfTheDayTests.dll"
   - mono --debug --profile=monocov:outfile=monocovCoverage.cov,+WordOfTheDay ./packages/NUnit.Console.3.0.0-alpha-5b/tools/nunit-console.exe --process=Single ./WordOfTheDay/WordOfTheDayTests/bin/Test/WordOfTheDayTests.dll
   - monocov --export-xml=monocovCoverage monocovCoverage.cov
