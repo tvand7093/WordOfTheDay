@@ -7,4 +7,5 @@ A word of the day style app.
 
 Currently supported languages:
  - Italian
-@c Data provided by Transparent Language Inc.
+
+Data provided by Transparent Language Inc.
