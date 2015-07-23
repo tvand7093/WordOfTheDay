@@ -18,8 +18,9 @@ namespace WordOfTheDay.iOS
 			global::Xamarin.Forms.Forms.Init ();
 			app.SetStatusBarStyle (UIStatusBarStyle.LightContent, false);
 
+			#if RELEASE
 			ConfigureInsights ();
-
+			#endif
 			LoadApplication (new App ());
 			return base.FinishedLaunching (app, options);
 		}

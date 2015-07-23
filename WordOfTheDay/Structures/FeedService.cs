@@ -29,7 +29,7 @@ namespace WordOfTheDay.Structures
 			if (String.IsNullOrEmpty (html)) {
 				#if RELEASE
 				Insights.Report (new Exception ("Html from fetching new word was null or empty"),
-					ReportSeverity.Error);
+					Insights.Severity.Error);
 				#endif
 				return null;
 			}

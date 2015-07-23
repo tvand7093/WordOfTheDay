@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DefineConstants>RELEASE;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
     <Optimize>false</Optimize>
