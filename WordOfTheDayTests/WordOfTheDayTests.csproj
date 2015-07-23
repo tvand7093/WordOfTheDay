@@ -33,6 +33,7 @@
     <DefineConstants>TEST;</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
+    <Commandlineparameters>--profile=cov:WordOfTheDay.dll WordOfTheDayTests.dll</Commandlineparameters>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
