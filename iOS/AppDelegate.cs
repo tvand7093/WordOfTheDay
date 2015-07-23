@@ -17,18 +17,20 @@ namespace WordOfTheDay.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
 			app.SetStatusBarStyle (UIStatusBarStyle.LightContent, false);
+
 			ConfigureInsights ();
 
 			LoadApplication (new App ());
 			return base.FinishedLaunching (app, options);
 		}
 
+		#if RELEASE
+
+		//Insights only for release version
+
 		void ConfigureInsights(){
-			#if DEBUG
-			Insights.Initialize(Insights.DebugModeKey);
-			#else
 			Insights.Initialize(Configuration.InsightsApiKey);
-			#endif
+
 
 			Insights.HasPendingCrashReport += (sender, isStartupCrash) =>
 			{
@@ -37,6 +39,8 @@ namespace WordOfTheDay.iOS
 				}
 			};
 		}
+		#endif
+
 	}
 }
 

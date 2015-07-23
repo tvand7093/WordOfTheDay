@@ -19,12 +19,18 @@ namespace WordOfTheDay.Structures
 {
 	public static class FeedService
 	{
-		const string RSSUrl = "http://feeds.feedblitz.com/italian-word-of-the-day&x=1";
+		public const string RSSUrl = "http://feeds.feedblitz.com/italian-word-of-the-day&x=1";
+
+		#if TEST
+		public static string TestHTML { get; set; }
+		#endif
 
 		static Word ParseHtml(string html){
 			if (String.IsNullOrEmpty (html)) {
+				#if RELEASE
 				Insights.Report (new Exception ("Html from fetching new word was null or empty"),
 					ReportSeverity.Error);
+				#endif
 				return null;
 			}
 				
@@ -60,7 +66,7 @@ namespace WordOfTheDay.Structures
 			var split = sb.ToString ().Split ('\n');
 
 			var todaysWord = titleParts [0].Trim () ?? string.Empty;
-			var englishWord = titleParts [0].Trim () ?? string.Empty;
+			var englishWord = titleParts [1].Trim () ?? string.Empty;
 
 			var partOfSpeach = split [0].Trim () ?? string.Empty;
 			var example = split [1].Trim () ?? string.Empty;
@@ -72,12 +78,10 @@ namespace WordOfTheDay.Structures
 				PartOfSpeach = WebUtility.HtmlDecode (partOfSpeach),
 				TodaysExample = WebUtility.HtmlDecode (example),
 				EnglishExample = WebUtility.HtmlDecode (englishExample),
-				Date = DateTime.Parse(pubDate)
+				Date = DateTime.Parse(pubDate).ToUniversalTime().Date
 			};
 			return word;
 		}
-
-
 
 		public static async Task<Word> GetWordAsync(){
 			//see if we already have today's word.
@@ -89,19 +93,28 @@ namespace WordOfTheDay.Structures
 			//no cached word, or we need to fetch the next day's word.
 			string html = string.Empty;
 
+			#if RELEASE
+			// Insights for release only.
 			var handle = Insights.TrackTime("TimeToFetchWord");
 			handle.Start();
+			#endif
 
 			using(var httpClient = new HttpClient())
 			{
+				#if TEST
+				html = TestHTML;
+				#else
 				html = await httpClient.GetStringAsync(RSSUrl);
+				#endif
 			}
 
+			#if RELEASE
+			// Insights for release only.
 			handle.Stop ();
-
 			handle = Insights.TrackTime ("TimeToParseHTMLAndSave");
-
 			handle.Start ();
+			#endif
+
 			//parse out the word info
 			var word = await Task.Run(() => ParseHtml(html));
 
@@ -109,7 +122,12 @@ namespace WordOfTheDay.Structures
 				//save new word to cache
 				FileService.SaveWordAsync(word);
 			}
+
+			#if RELEASE
+			// Insights for release only.
 			handle.Stop ();
+			#endif
+
 			return word;
 		}
 	}

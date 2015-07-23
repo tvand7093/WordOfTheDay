@@ -14,7 +14,6 @@ namespace WordOfTheDay.ViewModels
 	public class HomeViewModel : BaseViewModel<Word>, ISubscriber
 	{
 		const int Gutter = 15;
-		const string WebPageURL = "http://www.transparent.com/word-of-the-day/today/italian.html?date={0}-{1}-{2}";
 		readonly Thickness defaultThickness = new Thickness (0, 0, 0, 0);
 
 		public async void Loading(Page sender) 
@@ -90,9 +89,7 @@ namespace WordOfTheDay.ViewModels
 			Subscribe ();
 
 			OpenCommand = new Command(() => {
-				var url = string.Format(WebPageURL, DataSource.Date.Month, 
-					DataSource.Date.Day, DataSource.Date.Year);
-				Device.OpenUri(new Uri(url)); 
+				Device.OpenUri(new Uri(DataSource.Url)); 
 			});
 			DataSource = new Word ();
 		}

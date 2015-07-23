@@ -7,10 +7,10 @@ using System.Net;
 
 namespace WordOfTheDay.Structures
 {
-	internal static class FileService
+	public static class FileService
 	{
-		const string CacheFile = "CachedWord.json";
-		internal static async Task<Word> LoadWordAsync(){
+		public const string CacheFile = "CachedWord.json";
+		public static async Task<Word> LoadWordAsync(){
 
 			IFolder rootFolder = FileSystem.Current.LocalStorage;
 			var exists = await rootFolder.CheckExistsAsync (CacheFile);
@@ -32,10 +32,11 @@ namespace WordOfTheDay.Structures
 			return null;
 		}
 
-		internal static async void SaveWordAsync(Word toCache){
+		public static async void SaveWordAsync(Word toCache){
 			IFolder rootFolder = FileSystem.Current.LocalStorage;
-			var file = await rootFolder.CreateFileAsync (CacheFile, CreationCollisionOption.ReplaceExisting);
-			//set date to simple date, not including UTC
+			var file = await rootFolder.CreateFileAsync (CacheFile, 
+				CreationCollisionOption.ReplaceExisting);
+			//set date to simple date, not including time stuff
 			toCache.Date = toCache.Date.Date;
 			await file.WriteAllTextAsync (JsonConvert.SerializeObject (toCache));
 		}
