@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WordOfTheDay.ViewModels
+namespace WordOfTheDay.Interfaces
 {
 	public interface ISubscriber
 	{

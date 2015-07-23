@@ -37,37 +37,16 @@ namespace WordOfTheDayTests.Structures
 	[TestFixture]
 	public class FeedService_Regression_Tests
 	{
-		Word cached;
 		Word expected;
 
 		[SetUp]
 		public void Setup()
 		{
 			Cleanup.CleanCache ();
-			cached = new Word () 
-			{
-				Date = new DateTime(2015, 3, 15),
-				EnglishWord = "Word",
-				TodaysWord = "Parola",
-				EnglishExample = "I can speak more than one word.",
-				TodaysExample = "Posso parlare più di una parola.",
-				PartOfSpeach = "Noun"
-			};
 
-			expected = new Word () 
-			{
-				Date = new DateTime(2015, 7, 23),
-				EnglishWord = "to hold",
-				TodaysWord = "tenere",
-				EnglishExample = "If you hold it too tightly, the egg will break.",
-				TodaysExample = "Se lo tieni così stretto, l'uovo si rompe.",
-				PartOfSpeach = "verb"
-			};
+			expected = Generate.HtmlWord ();
 
-			using(var sr = new StreamReader("./Html/wotd.html"))
-			{
-				FeedService.TestHTML = sr.ReadToEndAsync ().Result;
-			}
+			Generate.ConfigureFeedService ();
 		}
 
 		[TearDown]
@@ -95,30 +74,10 @@ namespace WordOfTheDayTests.Structures
 		public void Setup()
 		{
 			Cleanup.CleanCache ();
-			cached = new Word () 
-			{
-				Date = new DateTime(2015, 3, 15),
-				EnglishWord = "Word",
-				TodaysWord = "Parola",
-				EnglishExample = "I can speak more than one word.",
-				TodaysExample = "Posso parlare più di una parola.",
-				PartOfSpeach = "Noun"
-			};
+			cached = Generate.CachedWord ();
+			expected = Generate.HtmlWord ();
 
-			expected = new Word () 
-			{
-				Date = new DateTime(2015, 7, 23),
-				EnglishWord = "to hold",
-				TodaysWord = "tenere",
-				EnglishExample = "If you hold it too tightly, the egg will break.",
-				TodaysExample = "Se lo tieni così stretto, l'uovo si rompe.",
-				PartOfSpeach = "verb"
-			};
-
-			using(var sr = new StreamReader("./Html/wotd.html"))
-			{
-				FeedService.TestHTML = sr.ReadToEndAsync ().Result;
-			}
+			Generate.ConfigureFeedService ();
 		}
 
 		[TearDown]

@@ -8,17 +8,17 @@ using System.Windows.Input;
 using WordOfTheDay.Models;
 using WordOfTheDay.Pages;
 using Xamarin;
+using WordOfTheDay.Interfaces;
 
 namespace WordOfTheDay.ViewModels
 {
 	public class HomeViewModel : BaseViewModel<Word>, ISubscriber
 	{
 		const int Gutter = 15;
-		readonly Thickness defaultThickness = new Thickness (0, 0, 0, 0);
 
-		public async void Loading(Page sender) 
+		public async Task Loading(Page sender) 
 		{
-			Padding = defaultThickness;
+			Padding = default(Thickness);
 
 			//hide all labels and show loading
 			sender.IsBusy = IsBusy = true;
@@ -26,10 +26,12 @@ namespace WordOfTheDay.ViewModels
 
 			try{
 				DataSource = await FeedService.GetWordAsync ().ConfigureAwait(true);
-				OnPropertyChanged ("DataSource");
 			}
+			// Analysis disable once EmptyGeneralCatchClause
 			catch(Exception e){
+				#if RELEASE
 				Insights.Report (e);
+				#endif 
 			}
 			finally {
 				Padding = CalculatePadding (sender);
@@ -40,12 +42,11 @@ namespace WordOfTheDay.ViewModels
 				//show resulting labels
 				ShowLabels = true;
 			}
-
 		}
 
 		public ICommand OpenCommand { get; private set; }
 
-		private bool showLabels;
+		bool showLabels;
 		public bool ShowLabels {
 			get { return showLabels; }
 			set {
@@ -54,7 +55,7 @@ namespace WordOfTheDay.ViewModels
 			}
 		}
 
-		private Thickness padding;
+		Thickness padding;
 		public Thickness Padding {
 			get { return padding; }
 			set {
@@ -63,8 +64,8 @@ namespace WordOfTheDay.ViewModels
 			}
 		}
 
-		private Thickness CalculatePadding(Page view){
-			Thickness thickness = defaultThickness;
+		Thickness CalculatePadding(Page view){
+			Thickness thickness = default(Thickness);
 
 			Device.OnPlatform (
 				iOS: () => thickness = new Thickness (Gutter, view.Height / 6, Gutter, Gutter),
@@ -75,7 +76,7 @@ namespace WordOfTheDay.ViewModels
 
 		public void Subscribe() {
 			MessagingCenter.Subscribe<Page> (this,
-				"Appearing", Loading);
+				"Appearing", async (p) => await Loading(p));
 		}
 
 		public void Unsubscribe() {
@@ -84,7 +85,8 @@ namespace WordOfTheDay.ViewModels
 			ShowLabels = false;
 		}
 			
-		public HomeViewModel ()
+		public HomeViewModel (IApplication app)
+			: base (app)
 		{
 			Subscribe ();
 

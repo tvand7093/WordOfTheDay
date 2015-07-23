@@ -26,10 +26,10 @@ namespace WordOfTheDay.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.InsightsCore.Resource.String.ApplicationName = global::WordOfTheDay.Droid.Resource.String.ApplicationName;
-			global::Xamarin.InsightsCore.Resource.String.Hello = global::WordOfTheDay.Droid.Resource.String.Hello;
 			global::PCLStorage.Resource.String.ApplicationName = global::WordOfTheDay.Droid.Resource.String.ApplicationName;
 			global::PCLStorage.Resource.String.Hello = global::WordOfTheDay.Droid.Resource.String.Hello;
+			global::Xamarin.Forms.Platform.Resource.String.ApplicationName = global::WordOfTheDay.Droid.Resource.String.ApplicationName;
+			global::Xamarin.Forms.Platform.Resource.String.Hello = global::WordOfTheDay.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Attribute

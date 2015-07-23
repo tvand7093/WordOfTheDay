@@ -19,15 +19,7 @@ namespace WordOfTheDayTests.Structures
 		public void Setup()
 		{
 			Cleanup.CleanCache ();
-			data = new Word () 
-			{
-				Date = new DateTime(2015, 3, 15, 6, 7, 10),
-				EnglishWord = "Word",
-				TodaysWord = "Parola",
-				EnglishExample = "I can speak more than one word.",
-				TodaysExample = "Posso parlare più di una parola.",
-				PartOfSpeach = "Noun"
-			};
+			data = Generate.CachedWord ();
 		}
 
 		[TearDown]

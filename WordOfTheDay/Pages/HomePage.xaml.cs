@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using WordOfTheDay.ViewModels;
+using WordOfTheDay.Interfaces;
 
 namespace WordOfTheDay.Pages
 {
@@ -10,7 +11,7 @@ namespace WordOfTheDay.Pages
 	{
 		public HomePage ()
 		{
-			BindingContext = new HomeViewModel ();;
+			BindingContext = new HomeViewModel ((IApplication)Application.Current);
 
 			this.Appearing += (object sender, EventArgs e) => {
 				MessagingCenter.Send<Page>(sender as Page, "Appearing");

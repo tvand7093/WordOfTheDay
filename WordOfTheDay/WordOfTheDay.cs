@@ -4,10 +4,11 @@ using Xamarin.Forms;
 using System.Diagnostics;
 using WordOfTheDay.Pages;
 using WordOfTheDay.ViewModels;
+using WordOfTheDay.Interfaces;
 
 namespace WordOfTheDay
 {
-	public class App : Application
+	public class App : Application, IApplication
 	{
 		public App ()
 		{
