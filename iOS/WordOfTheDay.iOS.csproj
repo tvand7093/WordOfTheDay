@@ -109,7 +109,7 @@
     <MtouchLink>None</MtouchLink>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="${SolutionDir}/spec/ios.sh" workingdir="${SolutionDir}/spec" externalConsole="True" pauseExternalConsole="True" />
+        <Command type="AfterBuild" command="${SolutionDir}/spec/scripts/ios.sh" workingdir="${SolutionDir}/spec" externalConsole="True" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
     <DebugSymbols>true</DebugSymbols>

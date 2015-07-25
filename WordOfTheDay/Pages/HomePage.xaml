@@ -28,7 +28,7 @@
 			 		</StackLayout>
 
 			 		<StackLayout Spacing="5">
-			 			<ctrls:HeaderLabel Text="Part of Speach" TextColor="#F1F2F1" />
+			 			<ctrls:HeaderLabel Text="Part of Speech" TextColor="#F1F2F1" />
 						<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F1F2F1" />	
 			 		</StackLayout>
 			 		<StackLayout Spacing="5">

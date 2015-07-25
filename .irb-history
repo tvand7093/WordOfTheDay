@@ -1,0 +1,50 @@
+activity
+activityindicator
+activity indicator
+label
+query("label")
+query "IsRunning"
+query "view IsRunning"
+view
+"view"
+query("view")
+query ("class: activity
+")
+query ("class: activity")
+query ("class: activityspinner")
+query ("class: activity spinner")
+query ("class: spinner")
+label
+query label
+query ("label"
+)
+query("*")
+query("label {text "Data"}")
+query("label {text 'Data'}")
+query("*")
+query("*")
+quit
+start_test_server_in_background
+label
+"label"
+query "label 'Part of Speach'"
+query "label {text 'Part of Speach'}"
+quit
+start_test_server_in_background
+query "label {text = 'Part of Speach'}"
+query "label"
+query "image"
+query "img"
+query "*"
+query("id RightArrow.png")
+query("{id == 'RightArrow.png'")
+query("view marked RightArrow.png")
+query("view marked: RightArrow.png")
+query("image marked: RightArrow.png")
+query("view marked: RightArrow.png")
+query("view id:RightArrow.png")
+query("id:RightArrow.png")
+query("id:'RightArrow.png'")
+query("view marked:'RightArrow.png'")
+quite
+quit

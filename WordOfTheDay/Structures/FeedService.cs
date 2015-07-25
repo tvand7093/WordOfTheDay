@@ -120,7 +120,7 @@ namespace WordOfTheDay.Structures
 
 			if (word != null) {
 				//save new word to cache
-				FileService.SaveWordAsync(word);
+				await FileService.SaveWordAsync(word);
 			}
 
 			#if RELEASE
