@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MONO_MAJOR = 4.0.2
-MONO_PATCH = 4.0.2.5
+MONO_MAJOR=4.0.2
+MONO_PATCH=4.0.2.5
 
 # Download Mono
 echo Downloading Mono...
