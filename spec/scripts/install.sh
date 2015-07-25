@@ -1,21 +1,20 @@
 #!/bin/bash
 
 # Install Mono
+echo Updating Homebrew...
 brew update
+
+echo Installing mono...
 brew install mono
 
+echo Running Calabash install script...
 # Install Calabash
 ruby <(curl -fsSL https://raw.githubusercontent.com/calabash/install/master/install-calabash-local-osx.rb)
 
-# Setup path
-touch ~/.bashrc
-
-export GEM_HOME=~/.calabash >> ~/.bashrc
-export GEM_PATH=~/.calabash >> ~/.bashrc
-export PATH="$PATH:$HOME/.calabash/bin" >> ~/.bashrc
-
-# Reload shell
-source ~/.bashrc
+echo Exporting variables...
+export GEM_HOME=~/.calabash
+export GEM_PATH=~/.calabash
+export PATH="$PATH:$HOME/.calabash/bin"
 
 # Restore NuGet packages
-nuget restore WordOfTheDay.sln
+mono --runtime=v4.0.30319 ./.nuget/nuget.exe restore WordOfTheDay.sln
