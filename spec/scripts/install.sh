@@ -1,7 +1,5 @@
 #!/bin/bash
 
-rvm install ruby-2.2.2
-
 # Install Mono
 brew update
 brew install mono
