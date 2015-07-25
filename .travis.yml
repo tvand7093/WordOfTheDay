@@ -1,7 +1,9 @@
-language: objective-c
+language: csharp
 
-osx_image: xcode6.4
-
-install: ./spec/scripts/install.sh
-
-script: ./spec/scripts/build.sh
+mono:
+  - latest
+install:
+  - nuget restore WordOfTheDay.sln
+script:
+  - xbuild /p:Configuration=Test WordOfTheDay.sln
+  - mono ./packages/NUnit.Runners.2.6.4/tools/nunit-console.exe "./WordOfTheDayTests/bin/Test/WordOfTheDayTests.dll"
