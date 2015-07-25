@@ -1,0 +1,5 @@
+# config/cucumber.yml
+##YAML Template
+---
+iPhone: DEVICE=iphone
+iPad: DEVICE=ipad

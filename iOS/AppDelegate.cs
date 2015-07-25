@@ -21,6 +21,12 @@ namespace WordOfTheDay.iOS
 			#if RELEASE
 			ConfigureInsights ();
 			#endif
+
+			#if TEST
+			Xamarin.Calabash.Start();
+			Console.WriteLine("Calabash component started");
+			#endif        
+
 			LoadApplication (new App ());
 			return base.FinishedLaunching (app, options);
 		}
