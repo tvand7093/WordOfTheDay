@@ -90,7 +90,7 @@ namespace WordOfTheDayTests.Structures
 		[Test]
 		public async Task ReturnsAWord ()
 		{
-			FileService.SaveWordAsync (cached);
+			await FileService.SaveWordAsync (cached);
 			var word = await FeedService.GetWordAsync();
 			word.Should ().NotBeNull ();
 		}
@@ -111,7 +111,7 @@ namespace WordOfTheDayTests.Structures
 		public async Task ReturnsCorrectCachedWord ()
 		{
 			cached.Date = DateTime.Now.Date;
-			FileService.SaveWordAsync (cached);
+			await FileService.SaveWordAsync (cached);
 
 			var word = await FeedService.GetWordAsync();
 			word.Date.Should ().Be (cached.Date);

@@ -32,7 +32,7 @@ namespace WordOfTheDay.Structures
 			return null;
 		}
 
-		public static async void SaveWordAsync(Word toCache){
+		public static async Task SaveWordAsync(Word toCache){
 			IFolder rootFolder = FileSystem.Current.LocalStorage;
 			var file = await rootFolder.CreateFileAsync (CacheFile, 
 				CreationCollisionOption.ReplaceExisting);
