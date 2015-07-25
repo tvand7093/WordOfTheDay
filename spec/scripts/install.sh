@@ -1,11 +1,15 @@
 #!/bin/bash
 
-# Install Mono
-echo Updating Homebrew...
-brew update
+MONO_MAJOR = 4.0.2
+MONO_PATCH = 4.0.2.5
 
-echo Installing mono...
-brew install mono
+# Download Mono
+echo Downloading Mono...
+curl "http://download.mono-project.com/archive/$MONO_MAJOR/macos-10-x86/MonoFramework-MDK-$MONO_PATCH.macos10.xamarin.x86.pkg" > mono.pkg
+
+# Install Mono
+echo Installing Mono...
+installer -pkg "mono.pkg" -target /
 
 echo Running Calabash install script...
 # Install Calabash
@@ -16,5 +20,6 @@ export GEM_HOME=~/.calabash
 export GEM_PATH=~/.calabash
 export PATH="$PATH:$HOME/.calabash/bin"
 
+echo Restoring Nuget Packages...
 # Restore NuGet packages
 mono --runtime=v4.0.30319 ./.nuget/nuget.exe restore WordOfTheDay.sln
