@@ -9,7 +9,7 @@ curl "http://download.mono-project.com/archive/$MONO_MAJOR/macos-10-x86/MonoFram
 
 # Install Mono
 echo Installing Mono...
-installer -pkg "mono.pkg" -target /
+sudo installer -pkg "mono.pkg" -target /
 
 echo Running Calabash install script...
 # Install Calabash
