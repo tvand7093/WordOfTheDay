@@ -9,12 +9,40 @@ using WordOfTheDay.Models;
 using WordOfTheDay.Pages;
 using Xamarin;
 using WordOfTheDay.Interfaces;
+using System.Collections.Generic;
 
 namespace WordOfTheDay.ViewModels
 {
 	public class HomeViewModel : BaseViewModel<Word>, ISubscriber
 	{
 		const int Gutter = 15;
+		IApplication app;
+		string lang;
+
+		public string SelectedLanguage {
+			get {
+				return lang;
+			}
+			set {
+				OnPropertyChanged ("SelectedLanguage");
+				lang = value;
+				if (app != null) {
+					Loading (app.MainPage);
+				}
+			}
+		}
+
+		public IEnumerable<String> Languages {
+			get {
+				var collection = new List<String> ();
+				var languages = Enum.GetValues(typeof(Language)).Cast<Language>();
+				foreach (var language in languages) {
+					collection.Add (new LanguageInfo (language).Name);
+				}
+				return collection;
+			}
+		}
+
 
 		public async Task Loading(Page sender) 
 		{
@@ -25,7 +53,9 @@ namespace WordOfTheDay.ViewModels
 			ShowLabels = false;
 
 			try{
-				DataSource = await FeedService.GetWordAsync ().ConfigureAwait(true);
+				DataSource = await FeedService.GetWordAsync (
+					(Language)Enum.Parse(typeof(Language), SelectedLanguage))
+					.ConfigureAwait(true);
 			}
 			// Analysis disable once EmptyGeneralCatchClause
 			catch(Exception e){
@@ -85,15 +115,21 @@ namespace WordOfTheDay.ViewModels
 			ShowLabels = false;
 		}
 			
-		public HomeViewModel (IApplication app)
+		public HomeViewModel (IApplication app, Language lang = Language.Italian)
 			: base (app)
 		{
+			this.app = app;
+			SelectedLanguage = new LanguageInfo(lang).Name;
+
 			Subscribe ();
 
 			OpenCommand = new Command(() => {
 				Device.OpenUri(new Uri(DataSource.Url)); 
 			});
-			DataSource = new Word ();
+
+			DataSource = new Word () {
+				WordLanguage = new LanguageInfo(lang)
+			};
 		}
 	}
 }

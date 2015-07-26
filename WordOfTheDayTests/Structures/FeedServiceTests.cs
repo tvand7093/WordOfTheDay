@@ -29,7 +29,7 @@ namespace WordOfTheDayTests.Structures
 		[Test]
 		public async Task ReturnsNewWord ()
 		{
-			var word = await FeedService.GetWordAsync();
+			var word = await FeedService.GetWordAsync(Language.Italian);
 			word.Should ().NotBeNull ();
 		}
 	}
@@ -58,7 +58,7 @@ namespace WordOfTheDayTests.Structures
 		[Test]
 		public async Task WordsAreDifferent ()
 		{
-			var word = await FeedService.GetWordAsync();
+			var word = await FeedService.GetWordAsync(Language.Italian);
 			word.EnglishWord.Should ().Be (expected.EnglishWord);
 			word.TodaysWord.Should ().Be (expected.TodaysWord);
 		}
@@ -91,14 +91,14 @@ namespace WordOfTheDayTests.Structures
 		public async Task ReturnsAWord ()
 		{
 			await FileService.SaveWordAsync (cached);
-			var word = await FeedService.GetWordAsync();
+			var word = await FeedService.GetWordAsync(Language.Italian);
 			word.Should ().NotBeNull ();
 		}
 
 		[Test]
 		public async Task ParsesNewWordCorrectly ()
 		{
-			var word = await FeedService.GetWordAsync();
+			var word = await FeedService.GetWordAsync(Language.Italian);
 
 			word.Date.Should ().Be (expected.Date);
 			word.EnglishWord.Should ().Be (expected.EnglishWord);
@@ -113,12 +113,13 @@ namespace WordOfTheDayTests.Structures
 			cached.Date = DateTime.Now.Date;
 			await FileService.SaveWordAsync (cached);
 
-			var word = await FeedService.GetWordAsync();
+			var word = await FeedService.GetWordAsync(Language.Italian);
 			word.Date.Should ().Be (cached.Date);
 			word.EnglishWord.Should ().Be (cached.EnglishWord);
 			word.EnglishExample.Should ().Be (cached.EnglishExample);
 			word.TodaysWord.Should ().Be (cached.TodaysWord);
 			word.TodaysExample.Should ().Be (cached.TodaysExample);
+			word.WordLanguage.Should ().Be (new LanguageInfo(Language.Italian));
 		}
 	}
 }

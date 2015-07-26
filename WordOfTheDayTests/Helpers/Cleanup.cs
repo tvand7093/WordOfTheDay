@@ -11,9 +11,14 @@ namespace WordOfTheDayTests.Helpers
 			try
 			{
 				//delete cached file if there.
-				var file = FileSystem.Current
-					.LocalStorage.GetFileAsync (FileService.CacheFile).Result;
-				file.DeleteAsync ();
+				var folder = FileSystem.Current.LocalStorage;
+				var files = folder.GetFilesAsync().Result;
+
+				foreach (var file in files) {
+					if(file.Name.Contains(".json")){
+						file.DeleteAsync().RunSynchronously();
+					}
+				}
 			}
 			catch(Exception){ }
 		}

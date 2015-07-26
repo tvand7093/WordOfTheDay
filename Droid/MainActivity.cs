@@ -12,7 +12,7 @@ using WordOfTheDay.Structures;
 
 namespace WordOfTheDay.Droid
 {
-	[Activity (Label = "WordOfTheDay.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	[Activity (Label = "La Parola", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{
 		protected override void OnCreate (Bundle bundle)
@@ -21,7 +21,10 @@ namespace WordOfTheDay.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
+			#if RELEASE
 			Insights.Initialize(Configuration.InsightsApiKey, this);
+			#endif
+
 			LoadApplication (new App ());
 		}
 	}

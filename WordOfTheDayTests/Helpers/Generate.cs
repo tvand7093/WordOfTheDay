@@ -34,7 +34,8 @@ namespace WordOfTheDayTests.Helpers
 				TodaysWord = "tenere",
 				EnglishExample = "If you hold it too tightly, the egg will break.",
 				TodaysExample = "Se lo tieni così stretto, l'uovo si rompe.",
-				PartOfSpeach = "verb"
+				PartOfSpeech = "verb",
+				WordLanguage = new LanguageInfo(Language.Italian)
 			};
 		}
 		public static Word CachedWord ()
@@ -46,7 +47,8 @@ namespace WordOfTheDayTests.Helpers
 				TodaysWord = "Parola",
 				EnglishExample = "I can speak more than one word.",
 				TodaysExample = "Posso parlare più di una parola.",
-				PartOfSpeach = "Noun"
+				PartOfSpeech = "Noun",
+				WordLanguage = new LanguageInfo(Language.Italian)
 			};
 		}
 	}

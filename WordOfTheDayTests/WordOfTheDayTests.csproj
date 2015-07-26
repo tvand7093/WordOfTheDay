@@ -91,6 +91,7 @@
     <Compile Include="ViewModels\BaseViewModelTests.cs" />
     <Compile Include="ViewModels\HomeViewModelTests.cs" />
     <Compile Include="Helpers\Generate.cs" />
+    <Compile Include="Models\LanguageInfoTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WordOfTheDay\WordOfTheDay.csproj">

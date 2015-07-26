@@ -9,14 +9,18 @@ namespace WordOfTheDay.Structures
 {
 	public static class FileService
 	{
-		public const string CacheFile = "CachedWord.json";
-		public static async Task<Word> LoadWordAsync(){
+		const string CacheFileFormat = "CachedWord-{0}.json";
+
+		public static async Task<Word> LoadWordAsync(Language lang){
 
 			IFolder rootFolder = FileSystem.Current.LocalStorage;
-			var exists = await rootFolder.CheckExistsAsync (CacheFile);
+			var fileName = string.Format (CacheFileFormat, lang.ToString());
+
+			var exists = await rootFolder.CheckExistsAsync (fileName);
+
 			if (exists == ExistenceCheckResult.FileExists) {
 				//read contents
-				var file = await rootFolder.GetFileAsync (CacheFile);
+				var file = await rootFolder.GetFileAsync (fileName);
 				var json = await file.ReadAllTextAsync ();
 				var cachedWord = JsonConvert.DeserializeObject<Word> (json);
 				var cachedDate = cachedWord.Date.Date;
@@ -34,7 +38,8 @@ namespace WordOfTheDay.Structures
 
 		public static async Task SaveWordAsync(Word toCache){
 			IFolder rootFolder = FileSystem.Current.LocalStorage;
-			var file = await rootFolder.CreateFileAsync (CacheFile, 
+			var file = await rootFolder.CreateFileAsync (
+				string.Format(CacheFileFormat, toCache.WordLanguage.Language), 
 				CreationCollisionOption.ReplaceExisting);
 			//set date to simple date, not including time stuff
 			toCache.Date = toCache.Date.Date;

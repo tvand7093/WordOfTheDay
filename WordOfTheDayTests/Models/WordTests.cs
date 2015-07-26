@@ -126,7 +126,7 @@ namespace WordOfTheDayTests.Models
 		{
 			var word = Generate.CachedWord ();
 			var word2 = Generate.CachedWord ();
-			word2.PartOfSpeach += "a";
+			word2.PartOfSpeech += "a";
 
 			word.CompareTo (word2).Should ().Be (-1);
 		}
@@ -136,7 +136,7 @@ namespace WordOfTheDayTests.Models
 		{
 			var word = Generate.CachedWord ();
 			var word2 = Generate.CachedWord ();
-			word.PartOfSpeach += "a";
+			word.PartOfSpeech += "a";
 			word.CompareTo (word2).Should ().Be (1);
 		}
 	}

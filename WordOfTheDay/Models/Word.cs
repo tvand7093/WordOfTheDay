@@ -6,21 +6,28 @@ namespace WordOfTheDay.Models
 	{
 
 		private const string APIUrlFormat 
-			= "http://www.transparent.com/word-of-the-day/today/italian.html?date={0}";
+		= "{0}?date={1}";
 
 		public string EnglishWord {get;set;}
 		public string TodaysWord {get;set;}
-		public string PartOfSpeach {get;set;}
+		public string PartOfSpeech {get;set;}
 		public string EnglishExample {get;set;}
 		public string TodaysExample {get;set;}
 		public DateTime Date {get;set;}
+		public LanguageInfo WordLanguage {get;set;}
+
+		public Word ()
+		{
+			WordLanguage = new LanguageInfo(Language.Italian);
+		}
 
 		string url;
 		public string Url 
 		{
 			get {
 				if (String.IsNullOrEmpty (url))
-					url = string.Format (APIUrlFormat, Date.ToString ("MM-dd-yyyy"));
+					url = string.Format (APIUrlFormat, WordLanguage.ApiUrl,
+						Date.ToString ("MM-dd-yyyy"));
 				return url;
 			}
 		}
@@ -37,7 +44,8 @@ namespace WordOfTheDay.Models
 				&& obj.EnglishWord.CompareTo(EnglishWord) == 0
 				&& obj.TodaysWord.CompareTo(TodaysWord) == 0
 				&& obj.TodaysExample.CompareTo(TodaysExample) == 0
-				&& obj.PartOfSpeach.CompareTo(PartOfSpeach) == 0)
+				&& obj.WordLanguage.CompareTo(WordLanguage) == 0
+				&& obj.PartOfSpeech.CompareTo(PartOfSpeech) == 0)
 				return 0;
 
 			if (Date.CompareTo (obj.Date) != 0)
@@ -51,13 +59,17 @@ namespace WordOfTheDay.Models
 						return EnglishWord.CompareTo(obj.EnglishWord);
 					else
 					{
-						if (TodaysWord.CompareTo (obj.TodaysWord) != 0)
-							return TodaysWord.CompareTo (obj.TodaysWord);
+						if (WordLanguage.CompareTo (obj.WordLanguage) != 0)
+							return WordLanguage.CompareTo (obj.WordLanguage);
 						else {
-							if (TodaysExample.CompareTo (obj.TodaysExample) != 0)
-								return TodaysExample.CompareTo (obj.TodaysExample);
+							if (TodaysWord.CompareTo (obj.TodaysWord) != 0)
+								return TodaysWord.CompareTo (obj.TodaysWord);
 							else {
-								return PartOfSpeach.CompareTo (obj.PartOfSpeach);
+								if (TodaysExample.CompareTo (obj.TodaysExample) != 0)
+									return TodaysExample.CompareTo (obj.TodaysExample);
+								else {
+									return PartOfSpeech.CompareTo (obj.PartOfSpeech);
+								}
 							}
 						}
 					}

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="B2E46F" android:versionName="alpha" android:versionCode="1">
-	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21" />
-	<application android:label="Todays Word">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="alpha" android:versionCode="1" package="com.blackhoefstudios.la_parola">
+	<uses-sdk android:minSdkVersion="10" android:targetSdkVersion="21" />
+	<application android:label="La Parola" android:icon="@drawable/icon">
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />

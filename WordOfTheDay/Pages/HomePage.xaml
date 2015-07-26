@@ -29,7 +29,7 @@
 
 			 		<StackLayout Spacing="5">
 			 			<ctrls:HeaderLabel Text="Part of Speech" TextColor="#F1F2F1" />
-						<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeach}" TextColor="#F1F2F1" />	
+						<ctrls:ExampleLabel Text="{Binding DataSource.PartOfSpeech}" TextColor="#F1F2F1" />	
 			 		</StackLayout>
 			 		<StackLayout Spacing="5">
 			 			<ctrls:HeaderLabel Text="Usage" TextColor="#F1F2F1" />
@@ -39,6 +39,8 @@
 			 			<ctrls:HeaderLabel Text="Translation" TextColor="#F1F2F1" />
 						<ctrls:ExampleLabel Text="{Binding DataSource.EnglishExample}" TextColor="#F1F2F1"/>
 			 		</StackLayout>
+
+			 		<ctrls:BindablePicker ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" />
 
 					<Label Text="Data provided by: Transparent Language, Inc"
 						HorizontalOptions="CenterAndExpand" VerticalOptions="End" FontSize="15" TextColor="#F1F2F1"/>

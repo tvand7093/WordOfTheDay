@@ -19,13 +19,11 @@ namespace WordOfTheDay.Structures
 {
 	public static class FeedService
 	{
-		public const string RSSUrl = "http://feeds.feedblitz.com/italian-word-of-the-day&x=1";
-
 		#if TEST
 		public static string TestHTML { get; set; }
 		#endif
 
-		static Word ParseHtml(string html){
+		static Word ParseHtml(Language lang, string html){
 			if (String.IsNullOrEmpty (html)) {
 				#if RELEASE
 				Insights.Report (new Exception ("Html from fetching new word was null or empty"),
@@ -75,17 +73,18 @@ namespace WordOfTheDay.Structures
 			var word = new Word {
 				TodaysWord = WebUtility.HtmlDecode (todaysWord),
 				EnglishWord = WebUtility.HtmlDecode (englishWord),
-				PartOfSpeach = WebUtility.HtmlDecode (partOfSpeach),
+				PartOfSpeech = WebUtility.HtmlDecode (partOfSpeach),
 				TodaysExample = WebUtility.HtmlDecode (example),
 				EnglishExample = WebUtility.HtmlDecode (englishExample),
-				Date = DateTime.Parse(pubDate).ToUniversalTime().Date
+				Date = DateTime.Parse(pubDate).ToUniversalTime().Date,
+				WordLanguage = new LanguageInfo(lang)
 			};
 			return word;
 		}
 
-		public static async Task<Word> GetWordAsync(){
+		public static async Task<Word> GetWordAsync(Language lang){
 			//see if we already have today's word.
-			var cached = await FileService.LoadWordAsync ();
+			var cached = await FileService.LoadWordAsync (lang);
 
 			if (cached != null)
 				return cached;
@@ -104,7 +103,8 @@ namespace WordOfTheDay.Structures
 				#if TEST
 				html = TestHTML;
 				#else
-				html = await httpClient.GetStringAsync(RSSUrl);
+				var languageInfo = new LanguageInfo(lang);
+				html = await httpClient.GetStringAsync(languageInfo.RSSUrl);
 				#endif
 			}
 
@@ -116,7 +116,7 @@ namespace WordOfTheDay.Structures
 			#endif
 
 			//parse out the word info
-			var word = await Task.Run(() => ParseHtml(html));
+			var word = await Task.Run(() => ParseHtml(lang, html));
 
 			if (word != null) {
 				//save new word to cache

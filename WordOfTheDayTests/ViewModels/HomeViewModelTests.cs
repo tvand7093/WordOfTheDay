@@ -9,6 +9,8 @@ using WordOfTheDay.Models;
 using Xamarin.Forms;
 using WordOfTheDay.Structures;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WordOfTheDayTests.ViewModels
 {
@@ -131,6 +133,15 @@ namespace WordOfTheDayTests.ViewModels
 		}
 
 		[Test]
+		public void SelectedLanguage_ShouldRaiseChanged()
+		{
+			var vm = new HomeViewModel (null);
+			vm.MonitorEvents ();
+			vm.SelectedLanguage = "Chinese";
+			vm.ShouldRaisePropertyChangeFor (m => m.SelectedLanguage);
+		}
+
+		[Test]
 		public async Task Loading_ShouldRaisePadding()
 		{
 			var app = Generate.GetApp ();
@@ -187,6 +198,18 @@ namespace WordOfTheDayTests.ViewModels
 
 			vm.IsBusy.Should ().BeFalse ();
 			vm.ShowLabels.Should ().BeTrue ();
+		}
+
+		[Test]
+		public void Languages_ShouldHaveValues()
+		{
+			var vm = new HomeViewModel (null);
+			var languages = Enum.GetNames (typeof(Language));
+			var vmLangs = vm.Languages;
+
+			foreach (var lang in vmLangs) {
+				languages.Contains (lang).Should ().BeTrue ();
+			}
 		}
 	}
 }
