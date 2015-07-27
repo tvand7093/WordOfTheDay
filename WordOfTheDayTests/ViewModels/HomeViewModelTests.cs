@@ -144,6 +144,8 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldRaisePadding()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
 			var vm = new HomeViewModel (app);
 			vm.MonitorEvents ();
@@ -156,18 +158,21 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldRaiseDataSource()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
 			var vm = new HomeViewModel (app);
 			vm.MonitorEvents ();
 
 			await vm.Loading (app.MainPage);
-
 			vm.ShouldRaisePropertyChangeFor(x => x.DataSource);
 		}
 
 		[Test]
 		public async Task Loading_DataSourceShouldNotBeDefault()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
 			var vm = new HomeViewModel (app);
 
@@ -179,6 +184,8 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldSetNewWord()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
 			var vm = new HomeViewModel (app);
 			var expected = Generate.HtmlWord ();
@@ -191,6 +198,8 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldResetBools()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
 			var vm = new HomeViewModel (app);
 
