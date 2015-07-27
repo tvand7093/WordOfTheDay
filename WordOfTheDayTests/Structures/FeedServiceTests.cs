@@ -46,7 +46,7 @@ namespace WordOfTheDayTests.Structures
 
 			expected = Generate.HtmlWord ();
 
-			Generate.ConfigureFeedService ();
+            Generate.ConfigureFeedService();
 		}
 
 		[TearDown]

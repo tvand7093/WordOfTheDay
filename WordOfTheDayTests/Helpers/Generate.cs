@@ -5,16 +5,17 @@ using Xamarin.Forms;
 using WordOfTheDay.Models;
 using WordOfTheDay.Structures;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace WordOfTheDayTests.Helpers
 {
 	public static class Generate
 	{
-		public static async void ConfigureFeedService()
+		public static void ConfigureFeedService()
 		{
 			using(var sr = new StreamReader("./Html/wotd.html"))
 			{
-				FeedService.TestHTML = await sr.ReadToEndAsync ();
+				FeedService.TestHTML = sr.ReadToEnd();
 			}
 		}
 		public static IApplication GetApp()

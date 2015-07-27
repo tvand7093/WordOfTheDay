@@ -5,8 +5,7 @@ namespace WordOfTheDay.Models
 	public class Word : IComparable<Word>
 	{
 
-		private const string APIUrlFormat 
-		= "{0}?date={1}";
+		private const string APIUrlFormat = "{0}?date={1}";
 
 		public string EnglishWord {get;set;}
 		public string TodaysWord {get;set;}
@@ -19,6 +18,10 @@ namespace WordOfTheDay.Models
 		public Word ()
 		{
 			WordLanguage = new LanguageInfo(Language.Italian);
+            EnglishExample = TodaysWord = string.Empty;
+            PartOfSpeech = EnglishExample = string.Empty;
+            TodaysExample = EnglishWord = string.Empty;
+            Date = default(DateTime);
 		}
 
 		string url;
@@ -38,14 +41,14 @@ namespace WordOfTheDay.Models
 		{
 			if (obj == null)
 				throw new NullReferenceException ();
-			
-			if (obj.Date.CompareTo(Date) == 0
-				&& obj.EnglishExample.CompareTo(EnglishExample) == 0
-				&& obj.EnglishWord.CompareTo(EnglishWord) == 0
-				&& obj.TodaysWord.CompareTo(TodaysWord) == 0
-				&& obj.TodaysExample.CompareTo(TodaysExample) == 0
-				&& obj.WordLanguage.CompareTo(WordLanguage) == 0
-				&& obj.PartOfSpeech.CompareTo(PartOfSpeech) == 0)
+
+            if (Date.CompareTo(obj.Date) == 0
+                && EnglishExample.CompareTo(obj.EnglishExample) == 0
+                && EnglishWord.CompareTo(obj.EnglishWord) == 0
+                && TodaysWord.CompareTo(obj.TodaysWord) == 0
+                && TodaysExample.CompareTo(obj.TodaysExample) == 0
+                && WordLanguage.CompareTo(obj.WordLanguage) == 0
+                && PartOfSpeech.CompareTo(obj.PartOfSpeech) == 0)
 				return 0;
 
 			if (Date.CompareTo (obj.Date) != 0)

@@ -62,6 +62,8 @@ namespace WordOfTheDay.ViewModels
 				#if RELEASE
 				Insights.Report (e);
 				#endif 
+                Debug.WriteLine(e);
+                Debugger.Break();
 			}
 			finally {
 				Padding = CalculatePadding (sender);
