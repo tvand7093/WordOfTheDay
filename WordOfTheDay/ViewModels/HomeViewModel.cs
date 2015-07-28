@@ -26,9 +26,7 @@ namespace WordOfTheDay.ViewModels
 			set {
 				OnPropertyChanged ("SelectedLanguage");
 				lang = value;
-				if (app != null) {
-					Loading (app.MainPage);
-				}
+                MessagingCenter.Send<String>(lang, "LanguageChanged");
 			}
 		}
 
@@ -107,10 +105,16 @@ namespace WordOfTheDay.ViewModels
 		public void Subscribe() {
 			MessagingCenter.Subscribe<Page> (this,
 				"Appearing", async (p) => await Loading(p));
+
+            MessagingCenter.Subscribe<String>(this,
+                "LanguageChanged", async (p) => {
+                    if (app != null) await Loading(app.MainPage);
+                });
 		}
 
 		public void Unsubscribe() {
 			MessagingCenter.Unsubscribe<Page> (this, "Appearing");
+            MessagingCenter.Unsubscribe<String>(this, "LanguageChanged");
 			IsBusy = false;
 			ShowLabels = false;
 		}
@@ -119,7 +123,7 @@ namespace WordOfTheDay.ViewModels
 			: base (app)
 		{
 			this.app = app;
-			SelectedLanguage = new LanguageInfo(lang).Name;
+			this.lang = new LanguageInfo(lang).Name;
 
 			Subscribe ();
 

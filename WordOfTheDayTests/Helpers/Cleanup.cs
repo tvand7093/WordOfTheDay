@@ -16,7 +16,7 @@ namespace WordOfTheDayTests.Helpers
 
 				foreach (var file in files) {
 					if(file.Name.Contains(".json")){
-						file.DeleteAsync().RunSynchronously();
+						file.DeleteAsync().Wait();
 					}
 				}
 			}

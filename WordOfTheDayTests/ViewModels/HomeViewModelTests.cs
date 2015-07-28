@@ -58,10 +58,10 @@ namespace WordOfTheDayTests.ViewModels
 			var vm = new HomeViewModel (null);
 
 			vm.DataSource.Date.Should ().Be (default(DateTime));
-			vm.DataSource.EnglishWord.Should ().BeNull ();
-			vm.DataSource.EnglishExample.Should ().BeNull ();
-			vm.DataSource.TodaysWord.Should ().BeNull ();
-			vm.DataSource.TodaysExample.Should ().BeNull ();
+			vm.DataSource.EnglishWord.Should ().BeEmpty ();
+            vm.DataSource.EnglishExample.Should().BeEmpty();
+            vm.DataSource.TodaysWord.Should().BeEmpty();
+            vm.DataSource.TodaysExample.Should().BeEmpty();
 		}
 
 		[Test]
@@ -122,7 +122,7 @@ namespace WordOfTheDayTests.ViewModels
 		public void Setup()
 		{
 			Cleanup.CleanCache ();
-			Generate.ConfigureFeedService ();
+            Generate.ConfigureFeedService();
 		}
 
 		[TearDown]
@@ -144,8 +144,10 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldRaisePadding()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
-			var vm = new HomeViewModel (Generate.GetApp());
+			var vm = new HomeViewModel (app);
 			vm.MonitorEvents ();
 
 			await vm.Loading (app.MainPage);
@@ -156,20 +158,23 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldRaiseDataSource()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
-			var vm = new HomeViewModel (Generate.GetApp());
+			var vm = new HomeViewModel (app);
 			vm.MonitorEvents ();
 
 			await vm.Loading (app.MainPage);
-
 			vm.ShouldRaisePropertyChangeFor(x => x.DataSource);
 		}
 
 		[Test]
 		public async Task Loading_DataSourceShouldNotBeDefault()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
-			var vm = new HomeViewModel (Generate.GetApp());
+			var vm = new HomeViewModel (app);
 
 			await vm.Loading (app.MainPage);
 
@@ -179,8 +184,10 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldSetNewWord()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
-			var vm = new HomeViewModel (Generate.GetApp());
+			var vm = new HomeViewModel (app);
 			var expected = Generate.HtmlWord ();
 
 			await vm.Loading (app.MainPage);
@@ -191,8 +198,10 @@ namespace WordOfTheDayTests.ViewModels
 		[Test]
 		public async Task Loading_ShouldResetBools()
 		{
+            Cleanup.CleanCache();
+
 			var app = Generate.GetApp ();
-			var vm = new HomeViewModel (Generate.GetApp());
+			var vm = new HomeViewModel (app);
 
 			await vm.Loading (app.MainPage);
 
