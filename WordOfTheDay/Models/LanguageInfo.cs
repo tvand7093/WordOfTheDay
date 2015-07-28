@@ -23,7 +23,18 @@ namespace WordOfTheDay.Models
 			} else {
 				RSSUrl = string.Format (RSSBaseUrl, urlName, string.Empty);
 			}
-			Name = Enum.GetName (typeof(Language), this.Language);
+			var name = Enum.GetName (typeof(Language), this.Language);
+			var result = string.Empty;
+
+			for (int i = 0; i < name.Length; i++) {
+				var letter = name [i];
+				if (Char.IsUpper (letter) && i != 0) {
+					//start of a new word...
+					result += " ";
+				}
+				result += letter;
+			}
+			Name = result;
 		}
 
 		string ParseLanguageName(Language lang)

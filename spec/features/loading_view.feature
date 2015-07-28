@@ -1,7 +1,7 @@
-Feature: Titles are underlined
-  The titles of each section
-  should be underlined and larger.
+Feature: Opens url for word of the day
+  When a user clicks on the word of the day
+  a web browser will load that words info.
 
-Scenario: Underlined Part of speech
+Scenario: Can open URL
   Given I am on the HomeScreen
-  Then the part of speech label will be underlined
+  Then tapping the word opens the url
