@@ -1,6 +1,7 @@
 ﻿using System;
 using PCLStorage;
 using WordOfTheDay.Structures;
+using WordOfTheDay.Helpers;
 
 namespace WordOfTheDayTests.Helpers
 {

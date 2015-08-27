@@ -11,6 +11,7 @@ using WordOfTheDay.Structures;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using WordOfTheDay.Helpers;
 
 namespace WordOfTheDayTests.ViewModels
 {
@@ -213,12 +214,60 @@ namespace WordOfTheDayTests.ViewModels
 		public void Languages_ShouldHaveValues()
 		{
 			var vm = new HomeViewModel (null);
-			var languages = Enum.GetNames (typeof(Language));
+
+			var languages = new String[] {
+				"Arabic",
+				"Balinese",
+				"Balinese For Indonesian",
+				"Chinese",
+				"Dari",
+				"Dutch",
+				"English For Portuguese",
+				"English For Spanish",
+				"Esperanto",
+				"French",
+				"German",
+				"Hebrew",
+				"Hindi",
+				"Indonesian",
+				"Irish",
+				"Italian",
+				"Japanese",
+				"Korean",
+				"Latin",
+				"Norwegian",
+				"Pashto",
+				"Polish",
+				"Portuguese",
+				"Russian",
+				"Spanish",
+				"Swedish",
+				"Turkish",
+				"Urdu"
+			};
+
 			var vmLangs = vm.Languages;
 
 			foreach (var lang in vmLangs) {
-				languages.Contains (lang).Should ().BeTrue ();
+				languages.Contains (lang).Should().BeTrue();
 			}
+		}
+
+		[Test]
+		public void Language_SavesAfterChange()
+		{
+			Cleanup.CleanCache ();
+			var vm = new HomeViewModel (null);
+
+			vm.SelectedLanguage = "German";
+			vm.LastLanguage.Should ().Be (Language.German);
+		}
+
+		[Test]
+		public void Language_DefaultIsItalian()
+		{
+			var vm = new HomeViewModel (null);
+			vm.SelectedLanguage.Should ().Be ("Italian");
 		}
 	}
 }

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace WordOfTheDay.Models
 {
@@ -15,46 +19,71 @@ namespace WordOfTheDay.Models
 		public LanguageInfo (Language language)
 		{
 			this.Language = language;
-			string urlName = ParseLanguageName (this.Language);
-			ApiUrl = string.Format(BaseUrl, urlName);
-			var split = urlName.Split ('-');
-			if (split.Length == 2) {
-				RSSUrl = string.Format (RSSBaseUrl, split[0], "-for-" + split[1]);
-			} else {
-				RSSUrl = string.Format (RSSBaseUrl, urlName, string.Empty);
-			}
-			var name = Enum.GetName (typeof(Language), this.Language);
-			var result = string.Empty;
+			Name = ParseLanguageName (this.Language);
 
-			for (int i = 0; i < name.Length; i++) {
-				var letter = name [i];
-				if (Char.IsUpper (letter) && i != 0) {
-					//start of a new word...
-					result += " ";
-				}
-				result += letter;
+			var split = Name.Split (' ');
+			if (split.Length == 3) {
+				// Format: <lang> For <Lang>
+				ApiUrl = string.Format(BaseUrl, split[0] + "-" + split[2]);
+				RSSUrl = string.Format (RSSBaseUrl, split[0], "-for-" + split[2]);
+			} else {
+				ApiUrl = string.Format(BaseUrl, Name);
+				RSSUrl = string.Format (RSSBaseUrl, Name, string.Empty);
 			}
-			Name = result;
+
+			ApiUrl = ApiUrl.ToLower ();
+			RSSUrl = RSSUrl.ToLower ();
 		}
 
 		string ParseLanguageName(Language lang)
 		{
-			var name = Enum.GetName (typeof(Language), lang).ToLower();
-			var forIndex = name.IndexOf ("for");
+			var name = Enum.GetName (typeof(Language), lang);
+			const string regexFormat = @"(\w+)For(\w+)Speakers";
+			var matchResult = Regex.Match (name, regexFormat);
 
-			if (forIndex != -1) {
-				//language for speaker, so do this.
-				var pre = name.Substring (0, forIndex);
-				var speakersIndex = name.IndexOf ("speakers");			
-				var postLength = speakersIndex - (forIndex + 3);
-				var post = name.Substring (forIndex + 3, postLength);
-				return pre + '-' + post;
-			} else {
-				//not for a speaker, so just return the value.
-				return name;
+			if (matchResult.Success) {
+				return string.Format ("{0} For {1}",
+					matchResult.Groups [1].Value, matchResult.Groups [2].Value);
+			} 
+
+			return name;
+		}
+
+		public static IEnumerable<String> AllLanguages
+		{
+			get {
+				return Enum.GetValues (typeof(Language))
+					.Cast<Language> ()
+					.Select (l => new LanguageInfo (l))
+					.Select (l => l.Name);
+			}
+		}
+
+		public static Language ParseLanguage(string language){
+			var words = language.Split(' ');
+
+			var sb = new StringBuilder ();
+			foreach (var word in words) {
+				sb.Append (CapitalizeFirstLetter (word));
 			}
 
+			language = sb.ToString();
 
+			if (words.Length > 1) {
+				language += "Speakers";
+			}
+
+			Language result;
+
+			if (Enum.TryParse (language, out result)) {
+				return result;
+			}
+			return Language.Italian;
+		}
+
+		static string CapitalizeFirstLetter(string word){
+			var capsLetter = Char.ToUpper(word[0]);
+			return word.Remove (0, 1).Insert (0, capsLetter.ToString ());
 		}
 
 		#region IComparable implementation

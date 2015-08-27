@@ -10,6 +10,7 @@ using WordOfTheDay.Pages;
 using Xamarin;
 using WordOfTheDay.Interfaces;
 using System.Collections.Generic;
+using WordOfTheDay.Helpers;
 
 namespace WordOfTheDay.ViewModels
 {
@@ -19,6 +20,12 @@ namespace WordOfTheDay.ViewModels
 		IApplication app;
 		string lang;
 
+		#if TEST
+
+		public Language LastLanguage { get; set; }
+
+		#endif
+
 		public string SelectedLanguage {
 			get {
 				return lang;
@@ -26,18 +33,27 @@ namespace WordOfTheDay.ViewModels
 			set {
 				OnPropertyChanged ("SelectedLanguage");
 				lang = value;
+
+
+				#if TEST
+
+				LastLanguage = LanguageInfo.ParseLanguage(lang); 
+
+				#else
+
+				if (Settings.AppSettings != null) {
+					Settings.LastLanguage = LanguageInfo.ParseLanguage(lang);
+				}
+
+				#endif
+
                 MessagingCenter.Send<String>(lang, "LanguageChanged");
 			}
 		}
 
 		public IEnumerable<String> Languages {
 			get {
-				var collection = new List<String> ();
-				var languages = Enum.GetValues(typeof(Language)).Cast<Language>();
-				foreach (var language in languages) {
-					collection.Add (new LanguageInfo (language).Name);
-				}
-				return collection;
+				return LanguageInfo.AllLanguages;
 			}
 		}
 
@@ -119,20 +135,30 @@ namespace WordOfTheDay.ViewModels
 			ShowLabels = false;
 		}
 			
-		public HomeViewModel (IApplication app, Language lang = Language.Italian)
+		public HomeViewModel (IApplication app)
 			: base (app)
 		{
 			this.app = app;
-			this.lang = new LanguageInfo(lang).Name;
+			var defaultLanguage = new LanguageInfo (Language.Italian);
 
+			#if TEST
+			this.lang = "Italian";
+			defaultLanguage = new LanguageInfo(Language.Italian);
+			#else
+
+			if (Settings.AppSettings != null) {
+				var lastLanguage = Settings.LastLanguage;
+				var li = new LanguageInfo (lastLanguage);
+				this.lang = li.Name;
+				defaultLanguage = li;
+			}
+			#endif
 			Subscribe ();
 
-			OpenCommand = new Command(() => {
-				Device.OpenUri(new Uri(DataSource.Url)); 
-			});
+			OpenCommand = new Command(() => Device.OpenUri (new Uri (DataSource.Url)));
 
 			DataSource = new Word () {
-				WordLanguage = new LanguageInfo(lang)
+				WordLanguage = defaultLanguage
 			};
 		}
 	}
