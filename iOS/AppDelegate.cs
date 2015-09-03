@@ -5,6 +5,8 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using Xamarin;
+using WordOfTheDay.Structures;
+using System.Diagnostics;
 
 namespace WordOfTheDay.iOS
 {
@@ -15,17 +17,27 @@ namespace WordOfTheDay.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
 			app.SetStatusBarStyle (UIStatusBarStyle.LightContent, false);
+
+			#if RELEASE
 			ConfigureInsights ();
+			#endif
+
+			#if TEST
+			Xamarin.Calabash.Start();
+			Console.WriteLine("Calabash component started");
+			#endif        
+
 			LoadApplication (new App ());
 			return base.FinishedLaunching (app, options);
 		}
 
+		#if RELEASE
+
+		//Insights only for release version
+
 		void ConfigureInsights(){
-			#if DEBUG
-			Insights.Initialize(Insights.DebugModeKey);
-			#else
-			Insights.Initialize("2c20bceca57690c4e1696a98faa68cef19795dc7");
-			#endif
+			Insights.Initialize(Configuration.InsightsApiKey);
+
 
 			Insights.HasPendingCrashReport += (sender, isStartupCrash) =>
 			{
@@ -34,6 +46,8 @@ namespace WordOfTheDay.iOS
 				}
 			};
 		}
+		#endif
+
 	}
 }
 

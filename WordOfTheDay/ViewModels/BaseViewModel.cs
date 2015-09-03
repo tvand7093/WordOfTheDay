@@ -1,20 +1,28 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
+using WordOfTheDay.Interfaces;
 
 namespace WordOfTheDay.ViewModels
 {
 
 	public abstract class BaseViewModel : INotifyPropertyChanged 
 	{
-		private bool isBusy;
+		IApplication app;
+
+		protected BaseViewModel (IApplication app)
+		{
+			this.app = app;
+		}
+
+		bool isBusy;
 		public bool IsBusy {
 			get { 
 				return isBusy;
 			}
 			set { 
-				if(Application.Current.MainPage != null)
-					Application.Current.MainPage.IsBusy = value;
+				if (app != null && app.MainPage != null)
+					app.MainPage.IsBusy = value;
 				
 				isBusy = value;
 				OnPropertyChanged ("IsBusy");
@@ -23,19 +31,20 @@ namespace WordOfTheDay.ViewModels
 
 		public INavigation Navigation {
 			get { 
-				var mainPage = Application.Current.MainPage;
-				if (mainPage is NavigationPage) {
-					return (INavigation)mainPage;
+				var mainPage = app.MainPage;
+				if (mainPage != null) {
+					if (mainPage is NavigationPage) {
+						return (INavigation)mainPage;
+					}
+					if (mainPage is TabbedPage) {
+						return ((TabbedPage)mainPage).Children [0].Navigation;
+					}
+					return app.MainPage.Navigation;
 				}
-				if (mainPage is TabbedPage) {
-					return ((TabbedPage)mainPage).Children [0].Navigation;
-				}
-				return Application.Current.MainPage.Navigation;
+				return null;
 			}
 		}
-
-
-
+			
 		#region Property Changed Implementation
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -54,7 +63,11 @@ namespace WordOfTheDay.ViewModels
 
 	public abstract class BaseViewModel<T> : BaseViewModel where T : class
 	{
-		
+		protected BaseViewModel (IApplication app) 
+			:base(app)
+		{
+			
+		}
 		private T dataSource;
 		public T DataSource {
 			get { return dataSource; }

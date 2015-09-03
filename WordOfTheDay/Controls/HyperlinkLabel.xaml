@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Label xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	x:Class="WordOfTheDay.Controls.HyperlinkLabel"  TextColor="#F0F8EA"
+	x:Class="WordOfTheDay.Controls.HyperlinkLabel"
 	FontSize="60" FontFamily="Marion-Italic" >
-
+	<Label.FontFamily>
+	 	<OnPlatform x:TypeArguments="x:String">
+            <OnPlatform.iOS>Marion-Italic</OnPlatform.iOS>
+            <OnPlatform.Android>Sans-Serif-Light</OnPlatform.Android>
+            <OnPlatform.WinPhone></OnPlatform.WinPhone>
+        </OnPlatform>
+     </Label.FontFamily>
 </Label>

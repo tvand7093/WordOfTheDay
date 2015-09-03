@@ -4,7 +4,10 @@
 [Dd]ebug
 [Pp]ackage
 [Pp]ackages
+[Tt]estResults
 *.suo
 *.vs
 .DS_Store
 *.userprefs
+*~
+#*#

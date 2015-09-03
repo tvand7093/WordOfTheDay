@@ -8,29 +8,74 @@ using System.Windows.Input;
 using WordOfTheDay.Models;
 using WordOfTheDay.Pages;
 using Xamarin;
+using WordOfTheDay.Interfaces;
+using System.Collections.Generic;
+using WordOfTheDay.Helpers;
 
 namespace WordOfTheDay.ViewModels
 {
 	public class HomeViewModel : BaseViewModel<Word>, ISubscriber
 	{
 		const int Gutter = 15;
-		const string WebPageURL = "http://www.transparent.com/word-of-the-day/today/italian.html?date={0}-{1}-{2}";
-		readonly Thickness defaultThickness = new Thickness (0, 0, 0, 0);
+		IApplication app;
+		string lang;
 
-		public async void Loading(Page sender) 
+		#if TEST
+
+		public Language LastLanguage { get; set; }
+
+		#endif
+
+		public string SelectedLanguage {
+			get {
+				return lang;
+			}
+			set {
+				OnPropertyChanged ("SelectedLanguage");
+				lang = value;
+
+
+				#if TEST
+
+				LastLanguage = LanguageInfo.ParseLanguage(lang); 
+
+				#else
+
+				if (Settings.AppSettings != null) {
+					Settings.LastLanguage = LanguageInfo.ParseLanguage(lang);
+				}
+
+				#endif
+
+                MessagingCenter.Send<String>(lang, "LanguageChanged");
+			}
+		}
+
+		public IEnumerable<String> Languages {
+			get {
+				return LanguageInfo.AllLanguages;
+			}
+		}
+
+
+		public async Task Loading(Page sender) 
 		{
-			Padding = defaultThickness;
+			Padding = default(Thickness);
 
 			//hide all labels and show loading
 			sender.IsBusy = IsBusy = true;
 			ShowLabels = false;
 
 			try{
-				DataSource = await FeedService.GetWordAsync ().ConfigureAwait(true);
-				OnPropertyChanged ("DataSource");
+				DataSource = await FeedService.GetWordAsync (
+					(Language)Enum.Parse(typeof(Language), SelectedLanguage))
+					.ConfigureAwait(true);
 			}
+			// Analysis disable once EmptyGeneralCatchClause
 			catch(Exception e){
+				#if RELEASE
 				Insights.Report (e);
+				#endif 
 			}
 			finally {
 				Padding = CalculatePadding (sender);
@@ -41,12 +86,11 @@ namespace WordOfTheDay.ViewModels
 				//show resulting labels
 				ShowLabels = true;
 			}
-
 		}
 
 		public ICommand OpenCommand { get; private set; }
 
-		private bool showLabels;
+		bool showLabels;
 		public bool ShowLabels {
 			get { return showLabels; }
 			set {
@@ -55,7 +99,7 @@ namespace WordOfTheDay.ViewModels
 			}
 		}
 
-		private Thickness padding;
+		Thickness padding;
 		public Thickness Padding {
 			get { return padding; }
 			set {
@@ -64,8 +108,8 @@ namespace WordOfTheDay.ViewModels
 			}
 		}
 
-		private Thickness CalculatePadding(Page view){
-			Thickness thickness = defaultThickness;
+		Thickness CalculatePadding(Page view){
+			Thickness thickness = default(Thickness);
 
 			Device.OnPlatform (
 				iOS: () => thickness = new Thickness (Gutter, view.Height / 6, Gutter, Gutter),
@@ -76,25 +120,46 @@ namespace WordOfTheDay.ViewModels
 
 		public void Subscribe() {
 			MessagingCenter.Subscribe<Page> (this,
-				"Appearing", Loading);
+				"Appearing", async (p) => await Loading(p));
+
+            MessagingCenter.Subscribe<String>(this,
+                "LanguageChanged", async (p) => {
+                    if (app != null) await Loading(app.MainPage);
+                });
 		}
 
 		public void Unsubscribe() {
 			MessagingCenter.Unsubscribe<Page> (this, "Appearing");
+            MessagingCenter.Unsubscribe<String>(this, "LanguageChanged");
 			IsBusy = false;
 			ShowLabels = false;
 		}
 			
-		public HomeViewModel ()
+		public HomeViewModel (IApplication app)
+			: base (app)
 		{
+			this.app = app;
+			var defaultLanguage = new LanguageInfo (Language.Italian);
+
+			#if TEST
+			this.lang = "Italian";
+			defaultLanguage = new LanguageInfo(Language.Italian);
+			#else
+
+			if (Settings.AppSettings != null) {
+				var lastLanguage = Settings.LastLanguage;
+				var li = new LanguageInfo (lastLanguage);
+				this.lang = li.Name;
+				defaultLanguage = li;
+			}
+			#endif
 			Subscribe ();
 
-			OpenCommand = new Command(() => {
-				var url = string.Format(WebPageURL, DataSource.Date.Month, 
-					DataSource.Date.Day, DataSource.Date.Year);
-				Device.OpenUri(new Uri(url)); 
-			});
-			DataSource = new Word ();
+			OpenCommand = new Command(() => Device.OpenUri (new Uri (DataSource.Url)));
+
+			DataSource = new Word () {
+				WordLanguage = defaultLanguage
+			};
 		}
 	}
 }

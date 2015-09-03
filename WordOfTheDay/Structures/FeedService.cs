@@ -11,21 +11,27 @@ using System.Text.RegularExpressions;
 using WordOfTheDay.Models;
 using Xamarin.Forms;
 using Xamarin;
+using PCLStorage;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace WordOfTheDay.Structures
 {
 	public static class FeedService
 	{
-		const string RSSUrl = "http://feeds.feedblitz.com/italian-word-of-the-day&x=1";
-		const string CacheKey = "CachedWord";
+		#if TEST
+		public static string TestHTML { get; set; }
+		#endif
 
-		static Word ParseHtml(string html){
+		static Word ParseHtml(Language lang, string html){
 			if (String.IsNullOrEmpty (html)) {
-				Insights.Report (new Exception ("Html from fetchingn new word was null or empty"),
-					ReportSeverity.Error);
+				#if RELEASE
+				Insights.Report (new Exception ("Html from fetching new word was null or empty"),
+					Insights.Severity.Error);
+				#endif
 				return null;
 			}
-
+				
 			var xdoc = XDocument.Parse (html);
 
 			var pubDate = xdoc.Root.Element ("channel").Element ("pubDate").Value;
@@ -55,37 +61,30 @@ namespace WordOfTheDay.Structures
 					sb.AppendLine (trimmed);
 				}
 			}
-
 			var split = sb.ToString ().Split ('\n');
+
+			var todaysWord = titleParts [0].Trim () ?? string.Empty;
+			var englishWord = titleParts [1].Trim () ?? string.Empty;
+
+			var partOfSpeach = split [0].Trim () ?? string.Empty;
+			var example = split [1].Trim () ?? string.Empty;
+			var englishExample = split [2].Trim () ?? string.Empty;
+
 			var word = new Word {
-				ItalianWord = titleParts [0].Trim () ?? string.Empty,
-				EnglishWord = titleParts [1].Trim () ?? string.Empty,
-				PartOfSpeach = split [0] ?? string.Empty,
-				NativeExample = split [1] ?? string.Empty,
-				EnglishExample = split [2] ?? string.Empty,
-				Date = DateTime.Parse(pubDate).ToUniversalTime()
+				TodaysWord = WebUtility.HtmlDecode (todaysWord),
+				EnglishWord = WebUtility.HtmlDecode (englishWord),
+				PartOfSpeech = WebUtility.HtmlDecode (partOfSpeach),
+				TodaysExample = WebUtility.HtmlDecode (example),
+				EnglishExample = WebUtility.HtmlDecode (englishExample),
+				Date = DateTime.Parse(pubDate).ToUniversalTime().Date,
+				WordLanguage = new LanguageInfo(lang)
 			};
 			return word;
 		}
 
-		static Task<Word> GetCachedWordAsync(){
-			return Task.Run<Word> (() => {
-				if (Application.Current.Properties.ContainsKey (CacheKey)) {
-					var cachedWord = Application.Current.Properties [CacheKey] as Word;
-					var cachedDate = cachedWord.Date.Date;
-					var currentDate = DateTime.Now.ToUniversalTime ().Date;
-					if (cachedDate == currentDate) {
-						//date same, so just return cached word.
-						return cachedWord;
-					}
-				}
-				return null;
-			});
-		}
-
-		public static async Task<Word> GetWordAsync(){
+		public static async Task<Word> GetWordAsync(Language lang){
 			//see if we already have today's word.
-			var cached = await GetCachedWordAsync ();
+			var cached = await FileService.LoadWordAsync (lang);
 
 			if (cached != null)
 				return cached;
@@ -93,30 +92,42 @@ namespace WordOfTheDay.Structures
 			//no cached word, or we need to fetch the next day's word.
 			string html = string.Empty;
 
+			#if RELEASE
+			// Insights for release only.
 			var handle = Insights.TrackTime("TimeToFetchWord");
 			handle.Start();
+			#endif
 
 			using(var httpClient = new HttpClient())
 			{
-				html = await httpClient.GetStringAsync(RSSUrl);
+				#if TEST
+				html = TestHTML;
+				#else
+				var languageInfo = new LanguageInfo(lang);
+				html = await httpClient.GetStringAsync(languageInfo.RSSUrl);
+				#endif
 			}
 
+			#if RELEASE
+			// Insights for release only.
 			handle.Stop ();
-
 			handle = Insights.TrackTime ("TimeToParseHTMLAndSave");
-
 			handle.Start ();
+			#endif
+
 			//parse out the word info
-			var word = await Task.Run(() => ParseHtml(html));
+			var word = await Task.Run(() => ParseHtml(lang, html));
 
 			if (word != null) {
-				//remove old word from cache
-				Application.Current.Properties.Remove(CacheKey);
-				//save new word into cache
-				Application.Current.Properties.Add (CacheKey, word);
-				await Application.Current.SavePropertiesAsync ();
+				//save new word to cache
+				await FileService.SaveWordAsync(word);
 			}
+
+			#if RELEASE
+			// Insights for release only.
 			handle.Stop ();
+			#endif
+
 			return word;
 		}
 	}

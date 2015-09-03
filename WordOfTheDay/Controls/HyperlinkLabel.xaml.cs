@@ -12,7 +12,7 @@ namespace WordOfTheDay.Controls
 				(l) => l.Command,
 				null,
 				propertyChanged: (img, oldVal, newVal) => {
-					(img as TapImage).Command = newVal;
+					(img as HyperlinkLabel).Command = newVal;
 				});
 
 		public static readonly BindableProperty CommandParameterProperty =
@@ -20,7 +20,7 @@ namespace WordOfTheDay.Controls
 				(l) => l.CommandParameter,
 				null,
 				propertyChanged: (img, oldVal, newVal) => {
-					(img as TapImage).CommandParameter = newVal;
+					(img as HyperlinkLabel).CommandParameter = newVal;
 				});
 
 		private readonly TapGestureRecognizer tappedRecognizer;
